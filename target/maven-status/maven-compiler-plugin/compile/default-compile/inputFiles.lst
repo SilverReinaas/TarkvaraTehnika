@@ -1,0 +1,9 @@
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/model/AppUser.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/controller/AuthController.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/model/LoginResponse.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/service/AuthServiceImpl.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/service/AuthService.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/model/LoginData.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/SpringApp.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/dao/Database.java
+/home/noob/code/university/TarkvaraTehnika/src/main/java/ee/ttu/softtech/util/Util.java
