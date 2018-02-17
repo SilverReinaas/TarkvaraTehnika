@@ -1,3 +1,12 @@
 export class App {  
-    message = 'Hello World Aurelia';
+	router: Router;
+	
+	configureRouter(config, router) {
+		this.router = router;
+
+		config.map([
+		    { route: '', name: 'home', moduleId: './home', title: 'Home', nav: 'true' },
+			{ route: 'login', name: 'login', moduleId: './login' , title: 'Log in', nav: 'true' }
+		]);
+	}	
 }
