@@ -23,7 +23,6 @@ public class AuthController {
 
     @RequestMapping(value = "auth", method = RequestMethod.POST)
     public @ResponseBody LoginResponse login(@RequestBody LoginData loginData) throws IOException {
-        log.info(loginData.getUsername() + ":" + loginData.getPassword());
         boolean isLogin = authService.authenticate(loginData);
         return isLogin ? new LoginResponse(LoginResponse.Status.OK) : new LoginResponse(LoginResponse.Status.FAIL);
     }

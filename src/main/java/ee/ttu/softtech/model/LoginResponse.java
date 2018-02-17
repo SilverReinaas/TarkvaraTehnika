@@ -11,7 +11,7 @@ public class LoginResponse {
         this.status = status;
         
         if (Status.OK.equals(status)) {
-            this.accessToken = RandomStringUtils.random(10);
+            this.accessToken = RandomStringUtils.randomAlphanumeric(10);
         }
     }
     
