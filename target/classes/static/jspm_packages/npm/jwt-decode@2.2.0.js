@@ -1,1 +1,0 @@
-module.exports = require("npm:jwt-decode@2.2.0/lib/index.js");
