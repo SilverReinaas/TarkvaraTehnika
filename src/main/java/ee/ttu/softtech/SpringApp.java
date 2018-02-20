@@ -43,8 +43,7 @@ public class SpringApp {
         return loggingFilter;
     }
     
-    public static void main(String[] args) {
-        SpringApplication.run(SpringApp.class);
+    public static void main(String[] args) { SpringApplication.run(SpringApp.class);
     }
 
 }
