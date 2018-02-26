@@ -1,6 +1,6 @@
 package ee.ttu.softtech.service;
 
-import ee.ttu.softtech.dao.Database;
+import ee.ttu.softtech.dao.UserRepository;
 import ee.ttu.softtech.model.AppUser;
 import ee.ttu.softtech.model.LoginData;
 import ee.ttu.softtech.util.Util;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class AuthServiceImpl implements AuthService {
     
     @Autowired
-    private Database db;
+    private UserRepository db;
 
     @Override
     public boolean authenticate(LoginData loginData) {
