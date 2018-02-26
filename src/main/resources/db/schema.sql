@@ -14,6 +14,6 @@ CREATE SEQUENCE app_user_id_seq;
 CREATE TABLE training (
     id INT NOT NULL PRIMARY KEY,
     training_time TIMESTAMP NOT NULL,
-    comment VARCHAR(100) NOT NULL
+    comment VARCHAR(100)
 );
 CREATE SEQUENCE training_id_seq;
