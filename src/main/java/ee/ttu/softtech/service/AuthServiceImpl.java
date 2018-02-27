@@ -16,7 +16,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean authenticate(LoginData loginData) {
         AppUser user = db.findByUsername(loginData.getUsername());
-        
+        System.gc();
         if (user == null) {
             return false;
         }
