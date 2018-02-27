@@ -1,10 +1,12 @@
 import {AuthService} from 'aurelia-authentication';
 import {inject, computedFrom} from 'aurelia-framework';
-@inject(AuthService)
+import {UserAware} from 'user_aware';
 
-export class Login {
+@inject(AuthService)
+export class Login extends UserAware {
 
 	constructor(authService) {
+	    super();
 		this.authService = authService;
 	};
 
@@ -19,7 +21,8 @@ export class Login {
     login() {
         return this.authService.login({username: this.username, password: this.password})
         .then(response => {
-            console.log("success logged " + response);
+            localStorage.setItem("currentUser",response.username);
+            console.log("success logged " + JSON.stringify(response));
         })
         .catch(err => {
 			console.log(err);
@@ -32,6 +35,6 @@ export class Login {
         .then(response => {
             console.log("auth response " + response);
         });
-    }	
+    }
   
 }

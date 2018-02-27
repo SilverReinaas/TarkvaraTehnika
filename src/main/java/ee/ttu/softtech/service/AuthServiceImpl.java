@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthServiceImpl implements AuthService {
-    
+
     @Autowired
     private UserRepository db;
 
@@ -23,6 +23,8 @@ public class AuthServiceImpl implements AuthService {
         
         String passwordHash = user.getPassword();
         String inputPasswordHash = Util.hash(loginData.getPassword());
+
         return passwordHash.equals(inputPasswordHash);
     }
+
 }

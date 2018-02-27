@@ -6,15 +6,16 @@ public class LoginResponse {
 
     private Status status;
     private String accessToken;
-    
+    private String username;
+
     public LoginResponse(Status status) {
         this.status = status;
-        
+
         if (Status.OK.equals(status)) {
             this.accessToken = RandomStringUtils.randomAlphanumeric(10);
         }
     }
-    
+
     public Status getStatus() {
         return status;
     }
@@ -30,9 +31,17 @@ public class LoginResponse {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
-    
+
     public static enum Status {
         OK,
         FAIL
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

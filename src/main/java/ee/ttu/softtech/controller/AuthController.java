@@ -21,10 +21,19 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @RequestMapping(value = "auth", method = RequestMethod.POST)
+    @RequestMapping(value = "auth/login", method = RequestMethod.POST)
     public @ResponseBody LoginResponse login(@RequestBody LoginData loginData) throws IOException {
         boolean isLogin = authService.authenticate(loginData);
-        return isLogin ? new LoginResponse(LoginResponse.Status.OK) : new LoginResponse(LoginResponse.Status.FAIL);
+        LoginResponse loginResponse = null;
+
+        if (isLogin) {
+            loginResponse = new LoginResponse(LoginResponse.Status.OK);
+            loginResponse.setUsername(loginData.getUsername());
+        } else {
+            loginResponse =  new LoginResponse(LoginResponse.Status.FAIL);
+        }
+
+        return loginResponse;
     }
     
     // This is just a test method for testing the login with http://localhost:8080/abc - remove after development
