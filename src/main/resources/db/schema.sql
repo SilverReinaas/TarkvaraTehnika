@@ -1,8 +1,8 @@
 DROP SEQUENCE IF EXISTS app_user_id_seq;
 DROP TABLE IF EXISTS app_user;
 
-DROP SEQUENCE IF EXISTS training_id_seq;
-DROP TABLE IF EXISTS training;
+DROP SEQUENCE IF EXISTS exercise_id_seq;
+DROP TABLE IF EXISTS exercise;
 
 CREATE TABLE app_user (
     id INT NOT NULL PRIMARY KEY,
@@ -11,9 +11,11 @@ CREATE TABLE app_user (
 );
 CREATE SEQUENCE app_user_id_seq;
 
-CREATE TABLE training (
+CREATE TABLE exercise (
     id INT NOT NULL PRIMARY KEY,
-    training_time TIMESTAMP NOT NULL,
-    comment VARCHAR(100)
+    name VARCHAR(100),
+    description VARCHAR(500),
+    user_id INT,
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (user_id) REFERENCES app_user(id)
 );
-CREATE SEQUENCE training_id_seq;
+CREATE SEQUENCE exercise_id_seq;
