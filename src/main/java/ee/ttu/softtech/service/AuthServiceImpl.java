@@ -27,4 +27,9 @@ public class AuthServiceImpl implements AuthService {
         return passwordHash.equals(inputPasswordHash);
     }
 
+    @Override
+    public AppUser getUserByUsername(String username) {
+        return db.findByUsername(username);
+    }
+
 }

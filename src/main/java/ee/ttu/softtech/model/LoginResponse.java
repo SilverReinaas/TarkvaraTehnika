@@ -6,7 +6,7 @@ public class LoginResponse {
 
     private Status status;
     private String accessToken;
-    private String username;
+    private Integer userId;
 
     public LoginResponse(Status status) {
         this.status = status;
@@ -32,16 +32,16 @@ public class LoginResponse {
         this.accessToken = accessToken;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public static enum Status {
         OK,
         FAIL
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

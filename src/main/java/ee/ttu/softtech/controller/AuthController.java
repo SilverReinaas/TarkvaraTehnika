@@ -28,7 +28,7 @@ public class AuthController {
 
         if (isLogin) {
             loginResponse = new LoginResponse(LoginResponse.Status.OK);
-            loginResponse.setUsername(loginData.getUsername());
+            loginResponse.setUserId(authService.getUserByUsername(loginData.getUsername()).getId());
         } else {
             loginResponse =  new LoginResponse(LoginResponse.Status.FAIL);
         }

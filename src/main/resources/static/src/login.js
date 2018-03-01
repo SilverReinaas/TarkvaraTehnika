@@ -21,7 +21,7 @@ export class Login extends UserAware {
     login() {
         return this.authService.login({username: this.username, password: this.password})
         .then(response => {
-            localStorage.setItem("currentUser",response.username);
+            localStorage.setItem("currentUserId",response.userId);
             console.log("success logged " + JSON.stringify(response));
         })
         .catch(err => {
