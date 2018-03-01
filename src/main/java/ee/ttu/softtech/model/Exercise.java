@@ -12,6 +12,7 @@ public class Exercise {
     private Integer id;
     private String name;
     private String description;
+    @Column(name = "user_id")
     private Integer userId;
 
     public Integer getId() {

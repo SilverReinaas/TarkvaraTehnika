@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 
 @Controller
 public class ExerciseController {
@@ -25,5 +27,10 @@ public class ExerciseController {
         exerciseService.addExercise(exercise);
         return "OK";
     }
-    
+
+
+    @RequestMapping(value = "getUserExercises", method = RequestMethod.POST)
+    public @ResponseBody ArrayList getUserExercises(@RequestBody Integer userId) throws IOException {
+        return exerciseService.getUserExercises(userId);
+    }
 }
