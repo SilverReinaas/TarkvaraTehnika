@@ -25,7 +25,6 @@ export class Dashboard extends UserAware {
                   })
                   .then(response => response.json())
                   .then(response => {
-                    console.log(JSON.stringify(response));
                     this.exercises = response;
                   })
                   .catch(error => {
