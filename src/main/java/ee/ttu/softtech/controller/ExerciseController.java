@@ -25,5 +25,4 @@ public class ExerciseController {
         exerciseService.addExercise(exercise);
         return "OK";
     }
-    
 }
