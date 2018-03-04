@@ -1,3 +1,10 @@
 <template>
-    Logged in as ${loggedInUsername}
+    <h1>My Exercises</h1>
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li repeat.for="item of exercises">
+                <button class="btn btn-danger" textcontent.bind="item.name"></button>
+            </li>
+        </ul>
+    </div>
 </template>
