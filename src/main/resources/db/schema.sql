@@ -35,8 +35,8 @@ CREATE SEQUENCE exercise_id_seq;
 
 CREATE TABLE exercise_log (
     id INT NOT NULL PRIMARY KEY,
-    log_date DATE,
-    exercise_id INT,
+    log_date DATE NOT NULL,
+    exercise_id INT NOT NULL,
     CONSTRAINT FK_ExerciseLog
     FOREIGN KEY (exercise_id) REFERENCES exercise(id)
 );
@@ -62,9 +62,7 @@ CREATE TABLE measure_log (
     id INT NOT NULL PRIMARY KEY,
     exercise_id INT NOT NULL,
     unit_type_id INT NOT NULL,
-    floatValue NUMERIC,
-    intValue INT,
-    timeValue INTERVAL,
+    val NUMERIC,
     FOREIGN KEY (exercise_id) REFERENCES exercise(id),
     FOREIGN KEY (unit_type_id) REFERENCES unit_type(id)
 );
