@@ -7,7 +7,9 @@ export function configure(aurelia) {
     .plugin('aurelia-api', config => {
       config
         .registerEndpoint('auth', '/auth')
-        .registerEndpoint('addTraining', '/addTraining');
+        .registerEndpoint('addExercise', '/addExercise')
+        .registerEndpoint('getUserExercises', '/getUserExercises')
+        .registerEndpoint('getUnitTypes', '/getUnitTypes')
     })
     .plugin('aurelia-authentication', baseConfig => {
         baseConfig.configure(authConfig);

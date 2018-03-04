@@ -3,10 +3,20 @@
 	<form role = "form" submit.delegate = "addExercise()">
 		<label for = "name">Exercise name</label>
 		<input type = "text" value.bind = "name" placeholder = "Name">
+		
+		<br/>
 
 		<label for = "description">Description</label>
-		<input type = "password" value.bind = "description" placeholder = "(optional)">
+		<input type = "text" value.bind = "description" placeholder = "(optional)">
+        
+        <br/>
 
+        <label repeat.for="item of unitTypes">
+            <input type = "checkbox" value.bind = "item.id" checked.bind = "selectedUnitTypes">${item.name} (${item.unit})<br/>
+        </label>
+
+        <br/>
+        
 		<button type = "submit">Create exercise</button>
 	</form>
 

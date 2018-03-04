@@ -1,12 +1,9 @@
 package ee.ttu.softtech.dao;
 
-import ee.ttu.softtech.model.Exercise;
 import ee.ttu.softtech.model.ExerciseLog;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
-
-public interface ExerciseLogRepository extends CrudRepository<ExerciseLog, Integer> {
+public interface ExerciseLogRepository extends JpaRepository<ExerciseLog, Integer> {
 
     ExerciseLog save(ExerciseLog exerciseLog);
 }

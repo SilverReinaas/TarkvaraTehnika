@@ -5,10 +5,7 @@ import ee.ttu.softtech.service.ExerciseService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,9 +25,13 @@ public class ExerciseController {
         return "OK";
     }
 
-
-    @RequestMapping(value = "getUserExercises", method = RequestMethod.POST)
-    public @ResponseBody ArrayList getUserExercises(@RequestBody Integer userId) throws IOException {
+    @RequestMapping(value = "getUserExercises", method = RequestMethod.GET)
+    public @ResponseBody Iterable getUserExercises(@RequestParam Integer userId) throws IOException {
         return exerciseService.getUserExercises(userId);
     }
+    
+    @RequestMapping(value = "getUnitTypes", method=RequestMethod.GET)
+    public @ResponseBody Iterable getUserExercises() throws IOException {
+        return exerciseService.getUnitTypes();
+    }    
 }

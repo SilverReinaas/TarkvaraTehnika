@@ -4,6 +4,10 @@
         <ul class="nav navbar-nav">
             <li repeat.for="item of exercises">
                 <button class="btn btn-danger" textcontent.bind="item.name"></button>
+                
+                <label repeat.for="unitType of item.unitTypes">
+                    ${unitType.name} (${unitType.unit})
+                </label>
             </li>
         </ul>
     </div>

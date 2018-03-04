@@ -2,6 +2,8 @@ package ee.ttu.softtech.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Exercise {
@@ -14,7 +16,12 @@ public class Exercise {
     private String description;
     @Column(name = "user_id")
     private Integer userId;
-
+    
+    @Transient
+    private Set<Integer> unitTypeIds;
+    @Transient
+    private List<UnitType> unitTypes;
+    
     public Integer getId() {
         return this.id;
     }
@@ -46,4 +53,21 @@ public class Exercise {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Set<Integer> getUnitTypeIds() {
+        return unitTypeIds;
+    }
+
+    public void setUnitTypeIds(Set<Integer> unitTypeIds) {
+        this.unitTypeIds = unitTypeIds;
+    }
+
+    public List<UnitType> getUnitTypes() {
+        return unitTypes;
+    }
+
+    public void setUnitTypes(List<UnitType> unitTypes) {
+        this.unitTypes = unitTypes;
+    }
+    
 }
