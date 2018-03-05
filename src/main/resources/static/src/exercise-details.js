@@ -21,6 +21,7 @@ export class Details{
           .find('', {id : params.id})
           .then(response => {
             this.exercise = response;
+            console.log(JSON.stringify(response));
           })
           .catch(error => {
             console.log(error);
