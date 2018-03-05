@@ -27,7 +27,18 @@
         </div>
         <div id="history" class="tab-pane fade">
             <h3>History</h3>
-            <p>Some content in menu 2.</p>
+            <p>
+            <ul class="nav navbar-nav">
+                <li repeat.for="item of measure_logs">
+                    <label textcontent.bind=""/>
+
+                    <label repeat.for="unitType of item.unitTypes">
+                        <input type="hidden" value.bind="unitTypeIds" value="${unitType.id}"/>
+                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="unitTypes"/>
+                    </label>
+                </li>
+            </ul>
+            </p>
         </div>
     </div>
 </template>

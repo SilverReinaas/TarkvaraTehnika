@@ -13,6 +13,8 @@ DROP TABLE IF EXISTS app_user;
 DROP SEQUENCE IF EXISTS unit_type_id_seq;
 DROP TABLE IF EXISTS unit_type;
 
+DROP TABLE IF EXISTS exercise_log;
+
 CREATE TABLE app_user (
     id INT NOT NULL PRIMARY KEY,
     username VARCHAR(40) NOT NULL,
