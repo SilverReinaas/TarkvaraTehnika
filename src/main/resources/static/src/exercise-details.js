@@ -16,7 +16,6 @@ export class Details{
         this.getExercise(params.id);
     }
     getExercise(exerciseId) {
-        console.log(exerciseId);
         this.exerciseEndpoint
           .find('', {id : exerciseId})
           .then(response => {
@@ -26,5 +25,22 @@ export class Details{
           .catch(error => {
             console.log(error);
           });
+    }
+    addExerciseLog() {
+        let measurements = {};
+        for (let i = 0; i < this.exercise.unitTypeIds.length; i++) {
+            measurements[this.exercise.unitTypeIds[i]] = this.exercise.unitTypes[i];
+        }
+
+        this.addExerciseLogEndpoint
+         .post('', {exerciseId: this.exercise.id, measurements: measurements})
+         .then(response => {
+           console.log(response);
+         })
+         .catch(error => {
+           console.log(error);
+         })
+
+        console.log(this.exercise.id, this.exercise.unitTypeIds, this.exercise.unitTypes);
     }
 }

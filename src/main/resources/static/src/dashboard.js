@@ -31,25 +31,6 @@ export class Dashboard extends UserAware {
             console.log(error);
           });
     }
-    
-    addExerciseLog() {
-        let measurements = {};
-        
-        for (let i = 0; i < this.unitTypeIds.length; i++) {
-            measurements[this.unitTypeIds[i]] = this.unitTypes[i];
-        }        
-
-        this.addExerciseLogEndpoint
-         .post('', {exerciseId: this.exerciseId, measurements: measurements})
-         .then(response => {
-           console.log(response);
-         })
-         .catch(error => {
-           console.log(error);
-         })
-    
-        console.log(this.exerciseId, this.unitTypeIds, this.unitTypes);
-    }
 
     openExercise() {
     this.router.navigateToRoute('exercise-details', { id: 99999 } );

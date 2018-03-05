@@ -8,11 +8,22 @@
     <div class="tab-content">
         <div id="description" class="tab-pane fade in active">
             <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
-            <p>Some content.</p>
+            <p>${exercise.description}</p>
         </div>
         <div id="log-this" class="tab-pane fade">
             <h3>Log this</h3>
-            <p>Some content in menu 1.</p>
+            <p>
+                <form role="form" submit.delegate="addExerciseLog()">
+                    <input type="hidden" name="exercise.id" value.bind="exercise.id" value="${exercise.id}" />
+
+                    <label repeat.for="unitType of exercise.unitTypes">
+                        <input type="hidden" value.bind="unitTypeIds" value="${unitType.id}"/>
+                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="unitTypes"/>
+                    </label>
+
+                    <button class="btn btn-danger" type="submit" textcontent.bind="exercise.name"></button>
+                </form>
+            </p>
         </div>
         <div id="history" class="tab-pane fade">
             <h3>History</h3>
