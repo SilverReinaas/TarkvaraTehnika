@@ -15,13 +15,12 @@
             <p>
                 <form role="form" submit.delegate="addMeasureLog()">
                     <input type="hidden" name="exercise.id" value.bind="exercise.id" value="${exercise.id}" />
-
                     <label repeat.for="unitType of exercise.unitTypes">
-                        <input type="hidden" value.bind="unitTypeIds" value="${unitType.id}"/>
-                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="unitTypes"/>
+                        <input type="hidden" value.bind="unitType.id" value="${unitType.id}"/>
+                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="valueInputs[$index]"/>
                     </label>
-
-                    <button class="btn btn-danger" type="submit" textcontent.bind="exercise.name"></button>
+                    <br>
+                    <button class="btn btn-success" type="submit">Add set</button>
                 </form>
             </p>
         </div>
