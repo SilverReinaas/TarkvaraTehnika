@@ -10,7 +10,7 @@ export function configure(aurelia) {
         .registerEndpoint('addExercise', '/addExercise')
         .registerEndpoint('getUserExercises', '/getUserExercises')
         .registerEndpoint('getUnitTypes', '/getUnitTypes')
-        .registerEndpoint('addExerciseLog', '/addExerciseLog')
+        .registerEndpoint('addMeasureLog', '/addMeasureLog')
         .registerEndpoint('getExerciseById', '/getExerciseById')
     })
     .plugin('aurelia-authentication', baseConfig => {

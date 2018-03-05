@@ -13,7 +13,7 @@
         <div id="log-this" class="tab-pane fade">
             <h3>Log this</h3>
             <p>
-                <form role="form" submit.delegate="addExerciseLog()">
+                <form role="form" submit.delegate="addMeasureLog()">
                     <input type="hidden" name="exercise.id" value.bind="exercise.id" value="${exercise.id}" />
 
                     <label repeat.for="unitType of exercise.unitTypes">

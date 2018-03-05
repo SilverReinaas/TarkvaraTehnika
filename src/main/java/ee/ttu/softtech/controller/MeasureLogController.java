@@ -1,7 +1,7 @@
 package ee.ttu.softtech.controller;
 
-import ee.ttu.softtech.model.ExerciseLog;
-import ee.ttu.softtech.service.ExerciseLogService;
+import ee.ttu.softtech.model.MeasureLog;
+import ee.ttu.softtech.service.MeasureLogService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,16 +14,16 @@ import java.io.IOException;
 
 
 @Controller
-public class ExerciseLogController {
+public class MeasureLogController {
 
-    private static final Logger log = Logger.getLogger(ExerciseLogController.class);
+    private static final Logger log = Logger.getLogger(MeasureLogController.class);
 
     @Autowired
-    private ExerciseLogService exerciseLogService;
+    private MeasureLogService measureLogService;
 
-    @RequestMapping(value = "addExerciseLog", method = RequestMethod.POST)
-    public @ResponseBody String addExerciseLog(@RequestBody ExerciseLog exerciseLog) throws IOException {
-        exerciseLogService.addExerciseLog(exerciseLog);
+    @RequestMapping(value = "addMeasureLog", method = RequestMethod.POST)
+    public @ResponseBody String addMeasureLog(@RequestBody MeasureLog measureLog) throws IOException {
+        measureLogService.addMeasureLog(measureLog);
         return "OK";
     }
 }

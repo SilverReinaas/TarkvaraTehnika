@@ -4,9 +4,6 @@ DROP TABLE IF EXISTS measure_log;
 DROP SEQUENCE IF EXISTS exercise_unit_type_id_seq;
 DROP TABLE IF EXISTS exercise_unit_type;
 
-DROP SEQUENCE IF EXISTS exercise_log_id_seq;
-DROP TABLE IF EXISTS exercise_log;
-
 DROP SEQUENCE IF EXISTS exercise_id_seq;
 DROP TABLE IF EXISTS exercise;
 
@@ -33,15 +30,6 @@ CREATE TABLE exercise (
 );
 CREATE SEQUENCE exercise_id_seq;
 
-CREATE TABLE exercise_log (
-    id INT NOT NULL PRIMARY KEY,
-    log_date DATE NOT NULL,
-    exercise_id INT NOT NULL,
-    CONSTRAINT FK_ExerciseLog
-    FOREIGN KEY (exercise_id) REFERENCES exercise(id)
-);
-CREATE SEQUENCE exercise_log_id_seq;
-
 CREATE TABLE unit_type (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -60,6 +48,7 @@ CREATE SEQUENCE exercise_unit_type_id_seq;
 
 CREATE TABLE measure_log (
     id INT NOT NULL PRIMARY KEY,
+    created TIMESTAMP NOT NULL,
     exercise_id INT NOT NULL,
     unit_type_id INT NOT NULL,
     val NUMERIC,
