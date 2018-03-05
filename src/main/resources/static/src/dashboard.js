@@ -52,7 +52,7 @@ export class Dashboard extends UserAware {
     }
 
     openExercise() {
-    this.router.navigateToRoute('exercise-details', { id: 1 } );
+    this.router.navigateToRoute('exercise-details', { id: 99999 } );
     }
 
 

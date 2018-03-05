@@ -7,18 +7,18 @@ export class Details{
 
     @bindable exercise;
 
-    exerciseId = null;
-
     constructor(exerciseEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
         this.router = router;
         this.exercise;
     }
     activate(params) {
+        this.getExercise(params.id);
     }
-    getExercise() {
+    getExercise(exerciseId) {
+        console.log(exerciseId);
         this.exerciseEndpoint
-          .find('', {id : params.id})
+          .find('', {id : exerciseId})
           .then(response => {
             this.exercise = response;
             console.log(JSON.stringify(response));
