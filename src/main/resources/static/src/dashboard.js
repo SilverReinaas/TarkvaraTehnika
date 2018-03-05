@@ -3,19 +3,16 @@ import {Endpoint} from 'aurelia-api';
 import {UserAware} from 'user_aware';
 import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('getUserExercises'), Endpoint.of('addExerciseLog'), Router)
+@inject(Endpoint.of('getUserExercises'), Router)
 export class Dashboard extends UserAware {
 
     @bindable exercises;
     
     exerciseId = null;
-    unitTypeIds = [];
-    unitTypes = [];
 
-    constructor(userExercisesEndpoint, addExerciseLogEndpoint, router) {
+    constructor(userExercisesEndpoint, router) {
         super();
         this.userExercisesEndpoint = userExercisesEndpoint;
-        this.addExerciseLogEndpoint = addExerciseLogEndpoint;
         this.exercises = [];
         this.getExercises();
         this.router = router;
@@ -33,7 +30,7 @@ export class Dashboard extends UserAware {
     }
 
     openExercise() {
-    this.router.navigateToRoute('exercise-details', { id: 99999 } );
+    this.router.navigateToRoute('exercise-details', { id: this.exerciseId } );
     }
 
 

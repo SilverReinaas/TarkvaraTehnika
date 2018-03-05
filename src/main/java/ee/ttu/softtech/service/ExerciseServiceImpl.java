@@ -49,6 +49,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public Exercise getExerciseById(Integer id) {
         Exercise result = db.findById(id);
+        List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypesDb.findAllByExerciseId(result.getId());
+        List<Integer> unitTypeIds = exerciseUnitTypes.stream().mapToInt(x -> x.getUnitTypeId()).boxed().collect(Collectors.toList());
+        List<UnitType> unitTypes = unitTypesDb.findAll(unitTypeIds);
+        result.setUnitTypes(unitTypes);
         return result;
     }
     

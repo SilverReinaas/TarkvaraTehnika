@@ -2,13 +2,17 @@ import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('getExerciseById'), Router)
+@inject(Endpoint.of('getExerciseById'), Endpoint.of('addExerciseLog'), Router)
 export class Details{
 
     @bindable exercise;
+    unitTypeIds = [];
+    unitTypes = [];    
 
-    constructor(exerciseEndpoint, router) {
+    constructor(exerciseEndpoint, addExerciseLogEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
+        this.addExerciseLogEndpoint = addExerciseLogEndpoint;
+        
         this.router = router;
         this.exercise;
     }
@@ -28,8 +32,9 @@ export class Details{
     }
     addExerciseLog() {
         let measurements = {};
-        for (let i = 0; i < this.exercise.unitTypeIds.length; i++) {
-            measurements[this.exercise.unitTypeIds[i]] = this.exercise.unitTypes[i];
+        
+        for (let i = 0; i < this.unitTypeIds.length; i++) {
+            measurements[this.unitTypeIds] = this.unitTypes;
         }
 
         this.addExerciseLogEndpoint
