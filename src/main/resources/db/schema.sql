@@ -1,6 +1,9 @@
 DROP SEQUENCE IF EXISTS measure_log_id_seq;
 DROP TABLE IF EXISTS measure_log;
 
+DROP SEQUENCE IF EXISTS exercise_set_id_seq;
+DROP TABLE IF EXISTS exercise_set;
+
 DROP SEQUENCE IF EXISTS exercise_unit_type_id_seq;
 DROP TABLE IF EXISTS exercise_unit_type;
 
@@ -46,13 +49,21 @@ CREATE TABLE exercise_unit_type (
 );
 CREATE SEQUENCE exercise_unit_type_id_seq;
 
-CREATE TABLE measure_log (
+CREATE TABLE exercise_set (
     id INT NOT NULL PRIMARY KEY,
     created TIMESTAMP NOT NULL,
     exercise_id INT NOT NULL,
+    FOREIGN KEY (exercise_id) REFERENCES exercise(id)
+);
+CREATE SEQUENCE exercise_set_id_seq;
+
+CREATE TABLE measure_log (
+    id INT NOT NULL PRIMARY KEY,
+    created TIMESTAMP NOT NULL,
+    exercise_set_id INT NOT NULL,
     unit_type_id INT NOT NULL,
     val NUMERIC,
-    FOREIGN KEY (exercise_id) REFERENCES exercise(id),
+    FOREIGN KEY (exercise_set_id) REFERENCES exercise_set(id),
     FOREIGN KEY (unit_type_id) REFERENCES unit_type(id)
 );
 CREATE SEQUENCE measure_log_id_seq;

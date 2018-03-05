@@ -11,9 +11,11 @@ public class MeasureLog {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "measure_log_id_seq_gen")
     private Integer id;
     private Date created = new Date();
-    private Integer exerciseId;
+    @Column(name = "unit_type_id")
     private Integer unitTypeId;
     private Float val;
+    @Column(name = "exercise_set_id")
+    private Integer exerciseSetId;
 
     public Integer getId() {
         return id;
@@ -29,14 +31,6 @@ public class MeasureLog {
 
     public void setCreated(Date created) {
         this.created = created;
-    }
-    
-    public Integer getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(Integer exerciseId) {
-        this.exerciseId = exerciseId;
     }
 
     public Integer getUnitTypeId() {
@@ -54,5 +48,12 @@ public class MeasureLog {
     public void setVal(Float val) {
         this.val = val;
     }
-    
+
+    public Integer getExerciseSetId() {
+        return exerciseSetId;
+    }
+
+    public void setExerciseSetId(Integer exerciseSetId) {
+        this.exerciseSetId = exerciseSetId;
+    }
 }

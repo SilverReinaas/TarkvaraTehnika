@@ -1,5 +1,6 @@
 package ee.ttu.softtech.controller;
 
+import ee.ttu.softtech.model.ExerciseSet;
 import ee.ttu.softtech.model.MeasureLog;
 import ee.ttu.softtech.model.MeasureLogData;
 import ee.ttu.softtech.service.MeasureLogService;
@@ -24,9 +25,12 @@ public class MeasureLogController {
 
     @RequestMapping(value = "addMeasureLog", method = RequestMethod.POST)
     public @ResponseBody String addMeasureLog(@RequestBody MeasureLogData measureLogData) throws IOException {
+        ExerciseSet exerciseSet = new ExerciseSet();
+        exerciseSet.setExerciseId(measureLogData.getExerciseId());
+        exerciseSet = measureLogService.addExerciseSet(exerciseSet);
         for (int i=0; i<measureLogData.getUnitTypes().size(); i++){
             MeasureLog measureLog = new MeasureLog();
-            measureLog.setExerciseId(measureLogData.getExerciseId());
+            measureLog.setExerciseSetId(exerciseSet.getId());
             measureLog.setUnitTypeId(measureLogData.getUnitTypes().get(i).getId());
             measureLog.setVal(measureLogData.getValues().get(i));
             measureLogService.addMeasureLog(measureLog);
