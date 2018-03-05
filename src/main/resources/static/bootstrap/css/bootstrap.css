@@ -592,6 +592,11 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
+.dashboard {
+  padding-bottom: 15px;
+  display: block;
+  width: 100%;
+}
 
 .row {
   display: -webkit-box;

@@ -11,5 +11,7 @@ public interface ExerciseService {
 
     Iterable<Exercise> getUserExercises(Integer userId);
 
+    Exercise getExerciseById(Integer id);
+
     Iterable<UnitType> getUnitTypes();
 }

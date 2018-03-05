@@ -45,6 +45,12 @@ public class ExerciseServiceImpl implements ExerciseService {
         
         return result;
     }
+
+    @Override
+    public Exercise getExerciseById(Integer id) {
+        Exercise result = db.findById(id);
+        return result;
+    }
     
     @Override
     public List<UnitType> getUnitTypes() {

@@ -15,4 +15,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     
     List<Exercise> findByUserId(Integer userId);
 
+    Exercise findById(Integer id);
+
 }

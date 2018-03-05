@@ -29,6 +29,11 @@ public class ExerciseController {
     public @ResponseBody Iterable getUserExercises(@RequestParam Integer userId) throws IOException {
         return exerciseService.getUserExercises(userId);
     }
+
+    @RequestMapping(value = "getExerciseById", method = RequestMethod.GET)
+    public @ResponseBody Exercise getExerciseById(@RequestParam Integer id) throws IOException {
+        return exerciseService.getExerciseById(id);
+    }
     
     @RequestMapping(value = "getUnitTypes", method=RequestMethod.GET)
     public @ResponseBody Iterable getUserExercises() throws IOException {

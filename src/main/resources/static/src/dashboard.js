@@ -1,8 +1,9 @@
 import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {UserAware} from 'user_aware';
+import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('getUserExercises'), Endpoint.of('addExerciseLog'))
+@inject(Endpoint.of('getUserExercises'), Endpoint.of('addExerciseLog'), Router)
 export class Dashboard extends UserAware {
 
     @bindable exercises;
@@ -11,15 +12,13 @@ export class Dashboard extends UserAware {
     unitTypeIds = [];
     unitTypes = [];
 
-    constructor(userExercisesEndpoint, addExerciseLogEndpoint) {
+    constructor(userExercisesEndpoint, addExerciseLogEndpoint, router) {
         super();
-        //this.exercises = [{"name":"test1"}, {"name": "test2"}];
-        //this.exercises = this.getExercises();
         this.userExercisesEndpoint = userExercisesEndpoint;
         this.addExerciseLogEndpoint = addExerciseLogEndpoint;
-        
         this.exercises = [];
         this.getExercises();
+        this.router = router;
     }
 
     getExercises() {
@@ -51,4 +50,10 @@ export class Dashboard extends UserAware {
     
         console.log(this.exerciseId, this.unitTypeIds, this.unitTypes);
     }
+
+    openExercise() {
+    this.router.navigateToRoute('exercise-details', { id: 1 } );
+    }
+
+
 }

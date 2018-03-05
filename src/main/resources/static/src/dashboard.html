@@ -1,19 +1,13 @@
 <template>
     <h1>My Exercises</h1>
     <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li repeat.for="item of exercises">
-                <form role="form" submit.delegate="addExerciseLog()">
-                    <input type="hidden" name="exerciseId" value.bind="exerciseId" value="${item.id}" />
-                    
-                    <label repeat.for="unitType of item.unitTypes">
-                        <input type="hidden" value.bind="unitTypeIds" value="${unitType.id}"/>
-                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="unitTypes"/> 
-                    </label>
-
-                    <button class="btn btn-danger" type="submit" textcontent.bind="item.name"></button>
-                </form>
-            </li>
-        </ul>
+            <ul>
+                <li repeat.for="item of exercises" class="dashboard">
+                    <form role="form" submit.delegate="openExercise()">
+                        <input type="hidden" name="exerciseId" value.bind="exerciseId" value="${item.id}" />
+                        <button class="btn btn-danger" type="submit" textcontent.bind="item.name"></button>
+                    </form>
+                </li>
+            </ul>
     </div>
 </template>
