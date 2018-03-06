@@ -11,4 +11,6 @@ public interface MeasureLogRepository extends JpaRepository<MeasureLog, Integer>
     MeasureLog save(MeasureLog log);
 
     List<MeasureLog> findByExerciseId(Integer exerciseId);
+
+    List<MeasureLog> findAllByExerciseSetId(Integer id);
 }

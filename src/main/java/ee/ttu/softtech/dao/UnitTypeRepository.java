@@ -10,5 +10,6 @@ public interface UnitTypeRepository extends JpaRepository<UnitType, Integer> {
     List<UnitType> findAll();
     
     List<UnitType> findAll(Iterable<Integer> ids);
-    
+
+    UnitType findAllById(Integer unitTypeId);
 }

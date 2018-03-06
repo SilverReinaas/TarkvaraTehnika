@@ -17,6 +17,9 @@ public class MeasureLog {
     @Column(name = "exercise_set_id")
     private Integer exerciseSetId;
 
+    @Transient
+    private UnitType unitType;
+
     public Integer getId() {
         return id;
     }
@@ -55,5 +58,13 @@ public class MeasureLog {
 
     public void setExerciseSetId(Integer exerciseSetId) {
         this.exerciseSetId = exerciseSetId;
+    }
+
+    public UnitType getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(UnitType unitType) {
+        this.unitType = unitType;
     }
 }

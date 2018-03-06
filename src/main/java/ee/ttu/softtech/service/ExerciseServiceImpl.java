@@ -1,16 +1,14 @@
 package ee.ttu.softtech.service;
 
 import ee.ttu.softtech.dao.ExerciseRepository;
+import ee.ttu.softtech.dao.ExerciseSetRepository;
 import ee.ttu.softtech.dao.ExerciseUnitTypeRepository;
 import ee.ttu.softtech.dao.UnitTypeRepository;
-import ee.ttu.softtech.model.Exercise;
-import ee.ttu.softtech.model.ExerciseUnitType;
-import ee.ttu.softtech.model.UnitType;
+import ee.ttu.softtech.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.function.ObjIntConsumer;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,10 +17,14 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Autowired
     private ExerciseRepository db;
     @Autowired
+    private ExerciseSetRepository set_db;
+    @Autowired
     private UnitTypeRepository unitTypesDb;
     @Autowired
     private ExerciseUnitTypeRepository exerciseUnitTypesDb;
-    
+    @Autowired
+    private MeasureLogService measureLogService;
+
     @Override
     public void addExercise(Exercise exercise) {
         exercise = db.save(exercise);
@@ -59,5 +61,15 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public List<UnitType> getUnitTypes() {
         return unitTypesDb.findAll();
+    }
+
+    @Override
+    public List<ExerciseSet> getExerciseSets(Integer exerciseId) {
+        List<ExerciseSet> result = set_db.findByExerciseId(exerciseId);
+        for (ExerciseSet set : result){
+            List<MeasureLog> measureLogs = measureLogService.findAllByExerciseSetId(set.getId());
+            set.setMeasureLogs(measureLogs);
+        }
+        return result;
     }
 }

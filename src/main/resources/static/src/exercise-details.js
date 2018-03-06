@@ -2,7 +2,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('getExerciseById'), Endpoint.of('addMeasureLog'), Endpoint.of('getMeasureLogsById'), Router)
+@inject(Endpoint.of('getExerciseById'), Endpoint.of('addMeasureLog'), Endpoint.of('getMeasureLogsById'), Endpoint.of('getExerciseSetsToday'), Router)
 export class Details{
 
     @bindable valueInputs = null;
@@ -10,13 +10,15 @@ export class Details{
     @bindable measure_logs;
     unitTypeIds = [];
     unitTypes = [];
+    @bindable setsToday = null;
 
-    constructor(exerciseEndpoint, addMeasureLogEndpoint, getMeasureLogsByIdEndpoint, router) {
+    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getMeasureLogsByIdEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
         this.getMeasureLogsByIdEndpoint = getMeasureLogsByIdEndpoint;
-
+        this.getExerciseSetsTodayEndpoint = getExerciseSetsTodayEndpoint;
         this.valueInputs = [];
+        this.setsToday = [];
         this.router = router;
         this.exercise;
     }
@@ -28,7 +30,7 @@ export class Details{
     fillValueInputs(exercise){
         this.valueInputs = [];
         for(let unitType of exercise.unitTypes){
-            this.valueInputs.push(0);
+            this.valueInputs.push(null);
         }
     }
 
@@ -37,6 +39,7 @@ export class Details{
           .find('', {id : exerciseId})
           .then(response => {
             this.exercise = response;
+            this.getExerciseSetsToday(response);
             this.fillValueInputs(response);
             console.log(JSON.stringify(response));
           })
@@ -55,6 +58,7 @@ export class Details{
          .then(response => {
            console.log(response);
            this.fillValueInputs(this.exercise);
+           this.getExerciseSetsToday(this.exercise);
          })
          .catch(error => {
            console.log(error);
@@ -69,5 +73,17 @@ export class Details{
           .catch(error => {
             console.log(error);
           });
+    }
+
+    getExerciseSetsToday(exercise){
+        this.getExerciseSetsTodayEndpoint
+        .find('', {id: exercise.id})
+        .then(response => {
+            this.setsToday = response;
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 }

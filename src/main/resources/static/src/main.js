@@ -13,6 +13,7 @@ export function configure(aurelia) {
         .registerEndpoint('addMeasureLog', '/addMeasureLog')
         .registerEndpoint('getExerciseById', '/getExerciseById')
         .registerEndpoint('getMeasureLogsById', '/getMeasureLogsById')
+        .registerEndpoint('getExerciseSetsToday', '/getExerciseSetsToday')
     })
     .plugin('aurelia-authentication', baseConfig => {
         baseConfig.configure(authConfig);

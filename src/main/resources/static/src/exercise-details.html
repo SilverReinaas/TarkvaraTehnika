@@ -11,21 +11,33 @@
             <p>${exercise.description}</p>
         </div>
         <div id="log-this" class="tab-pane fade">
-            <h3>Log this</h3>
+            <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
             <p>
+            <div style="width: 300px;">
                 <form role="form" submit.delegate="addMeasureLog()">
                     <input type="hidden" name="exercise.id" value.bind="exercise.id" value="${exercise.id}" />
-                    <label repeat.for="unitType of exercise.unitTypes">
+                    <div repeat.for="unitType of exercise.unitTypes" class="input-group">
                         <input type="hidden" value.bind="unitType.id" value="${unitType.id}"/>
-                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="valueInputs[$index]"/>
-                    </label>
-                    <br>
+                        <span class="input-group-addon">${unitType.name} (${unitType.unit})</span>
+                        <input class="form-control input-lg" type="text" value.bind="valueInputs[$index]"/>
+                    </div>
                     <button class="btn btn-success" type="submit">Add set</button>
                 </form>
+            </div>
             </p>
+            <h4>Sets today:</h4>
+            <ul>
+                <li repeat.for="set of setsToday">
+                    <span repeat.for="measure of set.measureLogs">
+                        <span innerhtml.bind="measure.val"></span>
+                        <span innerhtml.bind="measure.unitType.unit"></span>
+                        <span> </span>
+                    </span>
+                </li>
+            </ul>
         </div>
         <div id="history" class="tab-pane fade">
-            <h3>History</h3>
+            <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
             <p>
             <ul class="nav navbar-nav">
                 <li repeat.for="item of measure_logs">
