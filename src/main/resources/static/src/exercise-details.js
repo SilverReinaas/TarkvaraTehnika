@@ -2,21 +2,22 @@ import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('getExerciseById'), Endpoint.of('addMeasureLog'), Endpoint.of('getMeasureLogsById'), Endpoint.of('getExerciseSetsToday'), Router)
+@inject(Endpoint.of('getExerciseById'), Endpoint.of('addMeasureLog'), Endpoint.of('getExerciseSetsToday'), Endpoint.of('getExerciseSets'), Router)
 export class Details{
 
     @bindable valueInputs = null;
     @bindable exercise = null;
-    @bindable measure_logs;
     unitTypeIds = [];
     unitTypes = [];
     @bindable setsToday = null;
+    @bindable sets = null;
 
-    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getMeasureLogsByIdEndpoint, router) {
+
+    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getExerciseSetsEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
-        this.getMeasureLogsByIdEndpoint = getMeasureLogsByIdEndpoint;
         this.getExerciseSetsTodayEndpoint = getExerciseSetsTodayEndpoint;
+        this.getExerciseSetsEndpoint = getExerciseSetsEndpoint;
         this.valueInputs = [];
         this.setsToday = [];
         this.router = router;
@@ -24,7 +25,6 @@ export class Details{
     }
     activate(params) {
         this.getExercise(params.id);
-        this.getMeasureLogsById(params.id);
     }
 
     fillValueInputs(exercise){
@@ -40,6 +40,7 @@ export class Details{
           .then(response => {
             this.exercise = response;
             this.getExerciseSetsToday(response);
+            this.getExerciseSets(response);
             this.fillValueInputs(response);
             console.log(JSON.stringify(response));
           })
@@ -59,20 +60,11 @@ export class Details{
            console.log(response);
            this.fillValueInputs(this.exercise);
            this.getExerciseSetsToday(this.exercise);
+           this.getExerciseSets(this.exercise);
          })
          .catch(error => {
            console.log(error);
          })
-    }
-    getMeasureLogsById(exerciseId) {
-		this.getMeasureLogsByIdEndpoint
-		  .find('', {exerciseId: exerciseId})
-          .then(response => {
-            this.measure_logs = response;
-          })
-          .catch(error => {
-            console.log(error);
-          });
     }
 
     getExerciseSetsToday(exercise){
@@ -80,6 +72,17 @@ export class Details{
         .find('', {id: exercise.id})
         .then(response => {
             this.setsToday = response;
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+    getExerciseSets(exercise){
+        this.getExerciseSetsTodayEndpoint
+        .find('', {id: exercise.id})
+        .then(response => {
+            this.sets = response;
             console.log(response);
         })
         .catch(error => {

@@ -39,17 +39,17 @@
         <div id="history" class="tab-pane fade">
             <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
             <p>
-            <ul class="nav navbar-nav">
-                <li repeat.for="item of measure_logs">
-                    <label textcontent.bind=""/>
-
-                    <label repeat.for="unitType of item.unitTypes">
-                        <input type="hidden" value.bind="unitTypeIds" value="${unitType.id}"/>
-                        ${unitType.name} (${unitType.unit})<input type="text" value.bind="unitTypes"/>
-                    </label>
+            <ul>
+                <li repeat.for="set of sets">
+                    Date:
+                    <span class="label label-default" innerhtml.bind="set.created"></span> //
+                    <span repeat.for="measure of set.measureLogs">
+                        <span innerhtml.bind="measure.val"></span>
+                        <span innerhtml.bind="measure.unitType.unit"></span>
+                        <span> </span>
+                    </span>
                 </li>
             </ul>
             </p>
         </div>
-    </div>
 </template>

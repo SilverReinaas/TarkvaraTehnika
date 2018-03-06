@@ -35,8 +35,8 @@ public class MeasureLogController {
         return "OK";
     }
 
-    @RequestMapping(value = "getMeasureLogsById", method = RequestMethod.GET)
-    public @ResponseBody Iterable getMeasureLogsById(@RequestParam Integer exerciseId) throws IOException {
-        return measureLogService.getMeasureLogsById(exerciseId);
+    @RequestMapping(value = "findAllBySetId", method = RequestMethod.GET)
+    public @ResponseBody Iterable findAllByExerciseSetId(@RequestParam Integer id) throws IOException {
+        return measureLogService.findAllByExerciseSetId(id);
     }
 }

@@ -17,6 +17,8 @@ public class ExerciseSet {
 
     @Transient
     private List<MeasureLog> measureLogs;
+    @Transient
+    private List<UnitType> unitTypes;
 
     public Integer getId() {
         return id;
@@ -48,5 +50,13 @@ public class ExerciseSet {
 
     public void setMeasureLogs(List<MeasureLog> measureLogs) {
         this.measureLogs = measureLogs;
+    }
+
+    public List<UnitType> getUnitTypes() {
+        return unitTypes;
+    }
+
+    public void setUnitTypes(List<UnitType> unitTypes) {
+        this.unitTypes = unitTypes;
     }
 }
