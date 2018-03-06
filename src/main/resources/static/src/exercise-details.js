@@ -25,7 +25,7 @@ export class Details{
     fillValueInputs(exercise){
         this.valueInputs = [];
         for(let unitType of exercise.unitTypes){
-            this.valueInputs.push(0);
+            this.valueInputs.push(null);
         }
     }
 
@@ -54,6 +54,7 @@ export class Details{
          .then(response => {
            console.log(response);
            this.fillValueInputs(this.exercise);
+           this.getExerciseSetsToday(this.exercise);
          })
          .catch(error => {
            console.log(error);
@@ -64,6 +65,7 @@ export class Details{
         this.getExerciseSetsTodayEndpoint
         .find('', {id: exercise.id})
         .then(response => {
+            this.setsToday = response;
             console.log(response);
         })
         .catch(error => {

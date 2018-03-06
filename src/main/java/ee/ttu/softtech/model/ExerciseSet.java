@@ -16,7 +16,7 @@ public class ExerciseSet {
     private Date created = new Date();
 
     @Transient
-    private List<ExerciseSet> measureLogs;
+    private List<MeasureLog> measureLogs;
 
     public Integer getId() {
         return id;
@@ -42,11 +42,11 @@ public class ExerciseSet {
         this.created = created;
     }
 
-    public List<ExerciseSet> getMeasureLogs() {
+    public List<MeasureLog> getMeasureLogs() {
         return measureLogs;
     }
 
-    public void setMeasureLogs(List<ExerciseSet> measureLogs) {
+    public void setMeasureLogs(List<MeasureLog> measureLogs) {
         this.measureLogs = measureLogs;
     }
 }

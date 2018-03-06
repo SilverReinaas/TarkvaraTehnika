@@ -2,6 +2,7 @@ package ee.ttu.softtech.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class UnitType {
@@ -10,6 +11,7 @@ public class UnitType {
     private Integer id;
     private String name;
     private String unit;
+
 
     public Integer getId() {
         return id;
@@ -34,5 +36,5 @@ public class UnitType {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-    
+
 }

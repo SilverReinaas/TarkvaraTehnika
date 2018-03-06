@@ -23,6 +23,16 @@
                     <button class="btn btn-success" type="submit">Add set</button>
                 </form>
             </p>
+            <h4>Sets today:</h4>
+            <ul>
+                <li repeat.for="set of setsToday">
+                    <span repeat.for="measure of set.measureLogs">
+                        <span innerhtml.bind="measure.val"></span>
+                        <span innerhtml.bind="measure.unitType.unit"></span>
+                        <span> </span>
+                    </span>
+                </li>
+            </ul>
         </div>
         <div id="history" class="tab-pane fade">
             <h3>History</h3>

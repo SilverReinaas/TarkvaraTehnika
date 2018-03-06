@@ -49,14 +49,16 @@ public class ExerciseController {
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)
     public @ResponseBody
     List<ExerciseSet> getExerciseSetsToday(@RequestParam Integer id) throws IOException {
-        final Date today = new Date();
+        final Date now = new Date();
         Calendar c = Calendar.getInstance();
-        c.setTime(today);
-        c.add(Calendar.DATE, 1);
-        final Date tomorrow = c.getTime();
-        log.info(today.toString()+"-"+tomorrow.toString());
+        c.setTime(now);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        final Date morning = c.getTime();
+        log.info(now.toString()+"-"+morning.toString());
         return exerciseService.getExerciseSets(id).stream()
-                .filter(p -> p.getCreated().after(today) && p.getCreated().before(tomorrow)).collect(Collectors.toList());
+                .filter(p -> p.getCreated().after(morning) && p.getCreated().before(now)).collect(Collectors.toList());
     }
     
     @RequestMapping(value = "getUnitTypes", method=RequestMethod.GET)
