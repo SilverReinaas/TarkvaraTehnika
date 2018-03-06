@@ -7,8 +7,8 @@ import {Router} from 'aurelia-router';
 export class Dashboard extends UserAware {
 
     @bindable exercises;
-    
-    exerciseId = null;
+
+    exerciseId;
 
     constructor(userExercisesEndpoint, router) {
         super();
@@ -29,8 +29,8 @@ export class Dashboard extends UserAware {
           });
     }
 
-    openExercise() {
-    this.router.navigateToRoute('exercise-details', { id: this.exerciseId } );
+    openExercise(id) {
+    this.router.navigateToRoute('exercise-details', { id: id } );
     }
 
 
