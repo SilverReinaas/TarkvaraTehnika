@@ -21,6 +21,8 @@ public class Exercise {
     private Set<Integer> unitTypeIds;
     @Transient
     private List<UnitType> unitTypes;
+    @Transient
+    private List<ExerciseSet> sets;
     
     public Integer getId() {
         return this.id;
@@ -69,5 +71,12 @@ public class Exercise {
     public void setUnitTypes(List<UnitType> unitTypes) {
         this.unitTypes = unitTypes;
     }
-    
+
+    public List<ExerciseSet> getSets() {
+        return sets;
+    }
+
+    public void setSets(List<ExerciseSet> sets) {
+        this.sets = sets;
+    }
 }

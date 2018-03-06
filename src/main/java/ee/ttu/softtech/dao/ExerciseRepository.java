@@ -1,6 +1,7 @@
 package ee.ttu.softtech.dao;
 
 import ee.ttu.softtech.model.Exercise;
+import ee.ttu.softtech.model.ExerciseSet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
@@ -16,5 +17,4 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     List<Exercise> findByUserId(Integer userId);
 
     Exercise findById(Integer id);
-
 }

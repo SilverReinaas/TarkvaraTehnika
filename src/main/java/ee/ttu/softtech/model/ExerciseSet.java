@@ -2,6 +2,7 @@ package ee.ttu.softtech.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class ExerciseSet {
@@ -13,6 +14,9 @@ public class ExerciseSet {
     @Column(name = "exercise_id")
     private Integer exerciseId;
     private Date created = new Date();
+
+    @Transient
+    private List<ExerciseSet> measureLogs;
 
     public Integer getId() {
         return id;
@@ -36,5 +40,13 @@ public class ExerciseSet {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public List<ExerciseSet> getMeasureLogs() {
+        return measureLogs;
+    }
+
+    public void setMeasureLogs(List<ExerciseSet> measureLogs) {
+        this.measureLogs = measureLogs;
     }
 }

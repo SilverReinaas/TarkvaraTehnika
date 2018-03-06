@@ -1,9 +1,11 @@
 package ee.ttu.softtech.service;
 
 import ee.ttu.softtech.dao.ExerciseRepository;
+import ee.ttu.softtech.dao.ExerciseSetRepository;
 import ee.ttu.softtech.dao.ExerciseUnitTypeRepository;
 import ee.ttu.softtech.dao.UnitTypeRepository;
 import ee.ttu.softtech.model.Exercise;
+import ee.ttu.softtech.model.ExerciseSet;
 import ee.ttu.softtech.model.ExerciseUnitType;
 import ee.ttu.softtech.model.UnitType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Autowired
     private ExerciseRepository db;
+    @Autowired
+    private ExerciseSetRepository set_db;
     @Autowired
     private UnitTypeRepository unitTypesDb;
     @Autowired
@@ -59,5 +63,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public List<UnitType> getUnitTypes() {
         return unitTypesDb.findAll();
+    }
+
+    @Override
+    public List<ExerciseSet> getExerciseSets(Integer exerciseId) {
+        return set_db.findByExerciseId(exerciseId);
     }
 }
