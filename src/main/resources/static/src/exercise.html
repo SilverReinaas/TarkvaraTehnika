@@ -7,12 +7,12 @@
 		<br/>
 
 		<label for = "description">Description</label>
-		<input type = "text" value.bind = "description" placeholder = "(optional)">
+		<textarea rows="5" value.bind = "description" placeholder = "(optional)"></textarea>
         
         <br/>
 
         <label repeat.for="item of unitTypes">
-            <input type = "checkbox" value.bind = "item.id" checked.bind = "selectedUnitTypes">${item.name} (${item.unit})<br/>
+            <input type = "checkbox" value.bind = "item.id" checked.bind = "selectedUnitTypes">${item.name} (${item.unit})
         </label>
 
         <br/>
