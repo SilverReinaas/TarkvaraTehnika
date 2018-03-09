@@ -1,8 +1,9 @@
 import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {UserAware} from 'user_aware';
+import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('addExercise'), Endpoint.of('getUnitTypes'))
+@inject(Endpoint.of('addExercise'), Endpoint.of('getUnitTypes'), Router)
 export class Exercise extends UserAware {
 
     @bindable unitTypes;
@@ -11,11 +12,12 @@ export class Exercise extends UserAware {
 	description = '';
 	selectedUnitTypes = [];
 
-	constructor(addExerciseEndpoint, getUnitTypesEndpoint) {
+	constructor(addExerciseEndpoint, getUnitTypesEndpoint, router) {
 	    super();
 		this.addExerciseEndpoint = addExerciseEndpoint;
 		this.getUnitTypesEndpoint = getUnitTypesEndpoint;
 		this.getUnitTypes();
+		this.router = router;
 	};
 
     getUnitTypes() {
@@ -35,7 +37,9 @@ export class Exercise extends UserAware {
     
 		this.addExerciseEndpoint
 		  .post('', {name: this.name, description: this.description, userId: this.loggedInUserId, unitTypeIds: this.selectedUnitTypes}) 
-		  .then(console.log)
+		  .then(
+		    this.router.navigateToRoute('dashboard',"")
+		  )
           .catch(console.error);
     };
   

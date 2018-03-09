@@ -1,23 +1,23 @@
 <template>
 
 	<form role = "form" submit.delegate = "addExercise()">
-		<label for = "name">Exercise name</label>
-		<input type = "text" value.bind = "name" placeholder = "Name">
-		
-		<br/>
+		<div class="form-group">
+			<label for = "name">Exercise name</label>
+			<input type = "text" class="form-control" value.bind = "name" placeholder = "Name">
+		</div>
 
-		<label for = "description">Description</label>
-		<textarea rows="5" value.bind = "description" placeholder = "(optional)"></textarea>
-        
-        <br/>
+		<div class="form-group">
+			<label for = "description">Description</label>
+			<textarea class="form-control" rows="5" value.bind = "description" placeholder = "(optional)"></textarea>
+		</div>
 
-        <label repeat.for="item of unitTypes">
-            <input type = "checkbox" value.bind = "item.id" checked.bind = "selectedUnitTypes">${item.name} (${item.unit})
-        </label>
+		<div class="form-group">
+			<div class="checkbox" repeat.for="item of unitTypes">
+				<label><input type="checkbox" value.bind = "item.id" checked.bind = "selectedUnitTypes">${item.name} (${item.unit})</label>
+			</div>
+		</div>
 
-        <br/>
-        
-		<button type = "submit">Create exercise</button>
+			<button type = "submit" class="btn btn-success">Create exercise</button>
 	</form>
 
 </template>

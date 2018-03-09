@@ -1,17 +1,17 @@
 <template>
+    <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
+
     <ul class="nav nav-pills">
-        <li class="active"><a data-toggle="pill" href="#description">Description</a></li>
-        <li><a data-toggle="pill" href="#log-this">Log this</a></li>
+        <li><a data-toggle="pill" href="#description">Description</a></li>
+        <li class="active"><a data-toggle="pill" href="#log-this">Log this</a></li>
         <li><a data-toggle="pill" href="#history">History</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="description" class="tab-pane fade in active">
-            <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
+        <div id="description" class="tab-pane fade">
             <p>${exercise.description}</p>
         </div>
-        <div id="log-this" class="tab-pane fade">
-            <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
+        <div id="log-this" class="tab-pane fade in active">
             <p>
             <div style="width: 300px;">
                 <form role="form" submit.delegate="addMeasureLog()">
@@ -37,7 +37,6 @@
             </ul>
         </div>
         <div id="history" class="tab-pane fade">
-            <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
             <p>
             <ul>
                 <li repeat.for="set of sets">

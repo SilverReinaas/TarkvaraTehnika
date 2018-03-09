@@ -1,10 +1,9 @@
 <template>
-    <h1>My Exercises</h1>
     <div class="container-fluid">
-            <ul>
-                <li repeat.for="item of exercises" class="dashboard">
-                    <button class="btn btn-danger" type="button" textcontent.bind="item.name" click.delegate="openExercise(item.id)"></button>
-                </li>
-            </ul>
+        <h1>My Exercises</h1>
+        <a href="/#/exercise" class="btn btn-success btn-circle"><span class="glyphicon glyphicon-plus"></span>Add exercise</a>
+    </div>
+    <div class="list-group" style="margin-top: 10px">
+        <a href="#" class="list-group-item" repeat.for="item of exercises" textcontent.bind="item.name" click.delegate="openExercise(item.id)"></a>
     </div>
 </template>
