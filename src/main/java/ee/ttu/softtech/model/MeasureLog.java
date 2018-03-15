@@ -36,9 +36,7 @@ public class MeasureLog {
         this.created = created;
     }
 
-    public Integer getUnitTypeId() {
-        return unitTypeId;
-    }
+    public Integer getUnitTypeId() { return unitTypeId; }
 
     public void setUnitTypeId(Integer unitTypeId) {
         this.unitTypeId = unitTypeId;

@@ -2,6 +2,7 @@ package ee.ttu.softtech.service;
 
 import ee.ttu.softtech.model.Exercise;
 import ee.ttu.softtech.model.ExerciseSet;
+import ee.ttu.softtech.model.Muscle;
 import ee.ttu.softtech.model.UnitType;
 
 import java.util.ArrayList;
@@ -17,5 +18,8 @@ public interface ExerciseService {
 
     Iterable<UnitType> getUnitTypes();
 
+    Iterable<Muscle> getMuscles();
+
     List<ExerciseSet> getExerciseSets(Integer exerciseId);
+
 }

@@ -60,9 +60,13 @@ public class ExerciseController {
         return exerciseService.getExerciseSets(id).stream()
                 .filter(p -> p.getCreated().after(morning) && p.getCreated().before(now)).collect(Collectors.toList());
     }
-    
+
     @RequestMapping(value = "getUnitTypes", method=RequestMethod.GET)
-    public @ResponseBody Iterable getUserExercises() throws IOException {
+    public @ResponseBody Iterable getUnitTypes() throws IOException {
         return exerciseService.getUnitTypes();
-    }    
+    }
+    @RequestMapping(value = "getMuscles", method=RequestMethod.GET)
+    public @ResponseBody Iterable getMuscles() throws IOException {
+        return exerciseService.getMuscles();
+    }
 }

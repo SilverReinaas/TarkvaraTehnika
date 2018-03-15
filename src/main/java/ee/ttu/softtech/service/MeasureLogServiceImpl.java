@@ -2,9 +2,11 @@ package ee.ttu.softtech.service;
 
 import ee.ttu.softtech.dao.ExerciseSetRepository;
 import ee.ttu.softtech.dao.MeasureLogRepository;
+import ee.ttu.softtech.dao.MuscleRepository;
 import ee.ttu.softtech.dao.UnitTypeRepository;
 import ee.ttu.softtech.model.ExerciseSet;
 import ee.ttu.softtech.model.MeasureLog;
+import ee.ttu.softtech.model.Muscle;
 import ee.ttu.softtech.model.UnitType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

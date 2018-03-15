@@ -1,4 +1,5 @@
 <template>
+    <div style="margin-left: 7px">
     <h3 innerhtml.bind="exercise.name">${exercise.name}</h3>
 
     <ul class="nav nav-pills">
@@ -9,7 +10,9 @@
 
     <div class="tab-content">
         <div id="description" class="tab-pane fade">
-            <p>${exercise.description}</p>
+            <div style="margin-top: 5px; margin-bottom: 5px">${exercise.description}</div>
+            <b>Muscle groups: </b>
+            <div repeat.for="muscle of exercise.muscles">${muscle.muscleName}</div>
         </div>
         <div id="log-this" class="tab-pane fade in active">
             <p>
@@ -51,4 +54,5 @@
             </ul>
             </p>
         </div>
+    </div>
 </template>

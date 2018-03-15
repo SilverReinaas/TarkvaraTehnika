@@ -17,6 +17,12 @@
 			</div>
 		</div>
 
+		<div class="form-group">
+			<select multiple value.bind="selectedMuscles">
+				<option repeat.for="item of muscles" model.bind = "item.id">${item.muscleName}</option>
+			</select>
+		</div>
+
 			<button type = "submit" class="btn btn-success">Create exercise</button>
 	</form>
 

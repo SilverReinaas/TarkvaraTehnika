@@ -22,6 +22,10 @@ public class Exercise {
     @Transient
     private List<UnitType> unitTypes;
     @Transient
+    private Set<Integer> muscleIds;
+    @Transient
+    private List<Muscle> muscles;
+    @Transient
     private List<ExerciseSet> sets;
     
     public Integer getId() {
@@ -56,9 +60,7 @@ public class Exercise {
         this.description = description;
     }
 
-    public Set<Integer> getUnitTypeIds() {
-        return unitTypeIds;
-    }
+    public Set<Integer> getUnitTypeIds() { return unitTypeIds; }
 
     public void setUnitTypeIds(Set<Integer> unitTypeIds) {
         this.unitTypeIds = unitTypeIds;
@@ -79,4 +81,12 @@ public class Exercise {
     public void setSets(List<ExerciseSet> sets) {
         this.sets = sets;
     }
+
+    public List<Muscle> getMuscles() { return muscles; }
+
+    public void setMuscles(List<Muscle> muscles) { this.muscles = muscles; }
+
+    public Set<Integer> getMuscleIds() { return muscleIds; }
+
+    public void setMuscleIds(Set<Integer> muscleIds) { this.muscleIds = muscleIds; }
 }

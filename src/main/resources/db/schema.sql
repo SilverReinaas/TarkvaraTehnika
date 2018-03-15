@@ -7,6 +7,9 @@ DROP TABLE IF EXISTS exercise_set;
 DROP SEQUENCE IF EXISTS exercise_unit_type_id_seq;
 DROP TABLE IF EXISTS exercise_unit_type;
 
+DROP SEQUENCE IF EXISTS exercise_muscle_id_seq;
+DROP TABLE IF EXISTS exercise_muscle;
+
 DROP SEQUENCE IF EXISTS exercise_id_seq;
 DROP TABLE IF EXISTS exercise;
 
@@ -15,6 +18,9 @@ DROP TABLE IF EXISTS app_user;
 
 DROP SEQUENCE IF EXISTS unit_type_id_seq;
 DROP TABLE IF EXISTS unit_type;
+
+DROP SEQUENCE IF EXISTS muscle_id_seq;
+DROP TABLE IF EXISTS muscle;
 
 DROP TABLE IF EXISTS exercise_log;
 
@@ -69,3 +75,19 @@ CREATE TABLE measure_log (
     FOREIGN KEY (unit_type_id) REFERENCES unit_type(id)
 );
 CREATE SEQUENCE measure_log_id_seq;
+
+CREATE TABLE muscle (
+    id INT NOT NULL PRIMARY KEY,
+    muscle_name VARCHAR(100) NOT NULL,
+    location_id INT NOT NULL
+);
+CREATE SEQUENCE muscle_id_seq;
+
+CREATE TABLE exercise_muscle (
+    id INT NOT NULL PRIMARY KEY,
+    exercise_id INT NOT NULL,
+    muscle_id INT NOT NULL,
+    FOREIGN KEY (exercise_id) REFERENCES exercise(id),
+    FOREIGN KEY (muscle_id) REFERENCES muscle(id)
+);
+CREATE SEQUENCE exercise_muscle_id_seq;

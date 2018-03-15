@@ -1,9 +1,6 @@
 package ee.ttu.softtech.service;
 
-import ee.ttu.softtech.dao.ExerciseRepository;
-import ee.ttu.softtech.dao.ExerciseSetRepository;
-import ee.ttu.softtech.dao.ExerciseUnitTypeRepository;
-import ee.ttu.softtech.dao.UnitTypeRepository;
+import ee.ttu.softtech.dao.*;
 import ee.ttu.softtech.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +21,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     private ExerciseUnitTypeRepository exerciseUnitTypesDb;
     @Autowired
     private MeasureLogService measureLogService;
+    @Autowired
+    private MuscleRepository muscleDb;
+    @Autowired
+    private ExerciseMuscleRepository exerciseMuscleDb;
 
     @Override
     public void addExercise(Exercise exercise) {
@@ -31,6 +32,9 @@ public class ExerciseServiceImpl implements ExerciseService {
         
         for (Integer unitTypeId : exercise.getUnitTypeIds()) {
             exerciseUnitTypesDb.save(new ExerciseUnitType(exercise.getId(), unitTypeId));
+        }
+        for (Integer muscleId : exercise.getMuscleIds()) {
+            exerciseMuscleDb.save(new ExerciseMuscle(exercise.getId(), muscleId));
         }
     }
 
@@ -40,11 +44,14 @@ public class ExerciseServiceImpl implements ExerciseService {
         
         for (Exercise exercise : result) {
             List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypesDb.findAllByExerciseId(exercise.getId());
+            List<ExerciseMuscle> exerciseMuscles = exerciseMuscleDb.findAllByExerciseId(exercise.getId());
             List<Integer> unitTypeIds = exerciseUnitTypes.stream().mapToInt(x -> x.getUnitTypeId()).boxed().collect(Collectors.toList());
+            List<Integer> muscleIds = exerciseMuscles.stream().mapToInt(x -> x.getMuscleId()).boxed().collect(Collectors.toList());
             List<UnitType> unitTypes = unitTypesDb.findAll(unitTypeIds);
+            List<Muscle> muscles = muscleDb.findAll(muscleIds);
             exercise.setUnitTypes(unitTypes);
+            exercise.setMuscles(muscles);
         }
-        
         return result;
     }
 
@@ -52,15 +59,25 @@ public class ExerciseServiceImpl implements ExerciseService {
     public Exercise getExerciseById(Integer id) {
         Exercise result = db.findById(id);
         List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypesDb.findAllByExerciseId(result.getId());
+        List<ExerciseMuscle> exerciseMuscles = exerciseMuscleDb.findAllByExerciseId(result.getId());
         List<Integer> unitTypeIds = exerciseUnitTypes.stream().mapToInt(x -> x.getUnitTypeId()).boxed().collect(Collectors.toList());
+        List<Integer> muscleIds = exerciseMuscles.stream().mapToInt(x -> x.getMuscleId()).boxed().collect(Collectors.toList());
         List<UnitType> unitTypes = unitTypesDb.findAll(unitTypeIds);
+        List<Muscle> muscles = muscleDb.findAll(muscleIds);
         result.setUnitTypes(unitTypes);
+        result.setMuscles((muscles));
         return result;
     }
     
     @Override
     public List<UnitType> getUnitTypes() {
         return unitTypesDb.findAll();
+    }
+
+
+    @Override
+    public List<Muscle> getMuscles() {
+        return muscleDb.findAll();
     }
 
     @Override
