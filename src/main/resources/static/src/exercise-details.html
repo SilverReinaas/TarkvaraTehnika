@@ -44,7 +44,8 @@
             <ul>
                 <li repeat.for="set of sets">
                     Date:
-                    <span class="label label-default" innerhtml.bind="set.created"></span> //
+                    <require from="./date-format"></require>
+                    <span>${set.created | dateFormat}</span> //
                     <span repeat.for="measure of set.measureLogs">
                         <span innerhtml.bind="measure.val"></span>
                         <span innerhtml.bind="measure.unitType.unit"></span>
@@ -54,5 +55,6 @@
             </ul>
             </p>
         </div>
+    </div>
     </div>
 </template>
