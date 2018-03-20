@@ -2,7 +2,11 @@ import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {Router} from 'aurelia-router';
 
-@inject(Endpoint.of('getExerciseById'), Endpoint.of('addMeasureLog'), Endpoint.of('getExerciseSetsToday'), Endpoint.of('getExerciseSets'), Router)
+@inject(Endpoint.of('getExerciseById'),
+        Endpoint.of('addMeasureLog'),
+        Endpoint.of('getExerciseSetsToday'),
+        Endpoint.of('getSetsByDate'),
+        Router)
 export class Details{
 
     @bindable valueInputs = null;
@@ -10,16 +14,17 @@ export class Details{
     unitTypeIds = [];
     unitTypes = [];
     @bindable setsToday = null;
-    @bindable sets = null;
+    @bindable setsByDate = null;
 
 
-    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getExerciseSetsEndpoint, router) {
+    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getSetsByDateEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
         this.getExerciseSetsTodayEndpoint = getExerciseSetsTodayEndpoint;
-        this.getExerciseSetsEndpoint = getExerciseSetsEndpoint;
+        this.getSetsByDateEndpoint = getSetsByDateEndpoint;
         this.valueInputs = [];
         this.setsToday = [];
+        this.setsByDateList = [];
         this.router = router;
         this.exercise;
     }
@@ -40,7 +45,7 @@ export class Details{
           .then(response => {
             this.exercise = response;
             this.getExerciseSetsToday(response);
-            this.getExerciseSets(response);
+            this.getSetsByDate(response);
             this.fillValueInputs(response);
             console.log(JSON.stringify(response));
           })
@@ -60,7 +65,7 @@ export class Details{
            console.log(response);
            this.fillValueInputs(this.exercise);
            this.getExerciseSetsToday(this.exercise);
-           this.getExerciseSets(this.exercise);
+           this.getSetsByDate(this.exercise);
          })
          .catch(error => {
            console.log(error);
@@ -78,11 +83,12 @@ export class Details{
             console.log(error);
         })
     }
-    getExerciseSets(exercise){
-        this.getExerciseSetsTodayEndpoint
+    getSetsByDate(exercise){
+        this.getSetsByDateEndpoint
         .find('', {id: exercise.id})
         .then(response => {
-            this.sets = response;
+            console.log("Sets by date: ");
+            this.setsByDateList = response;
             console.log(response);
         })
         .catch(error => {

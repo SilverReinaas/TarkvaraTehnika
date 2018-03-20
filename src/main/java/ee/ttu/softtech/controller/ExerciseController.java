@@ -1,7 +1,9 @@
 package ee.ttu.softtech.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import ee.ttu.softtech.model.Exercise;
 import ee.ttu.softtech.model.ExerciseSet;
+import ee.ttu.softtech.model.SetsByDate;
 import ee.ttu.softtech.service.ExerciseService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -44,6 +46,36 @@ public class ExerciseController {
     public @ResponseBody
     List<ExerciseSet> getExerciseSets(@RequestParam Integer exerciseId) throws IOException {
         return exerciseService.getExerciseSets(exerciseId);
+    }
+
+    @RequestMapping(value = "getSetsByDateList", method = RequestMethod.GET)
+    public @ResponseBody
+    List<SetsByDate> getSetsByDateList(@RequestParam Integer id) throws IOException, ParseException {
+        List<SetsByDate> result = new ArrayList<>();
+        List<ExerciseSet> sets =  exerciseService.getExerciseSets(id);
+        Collections.sort(sets, Comparator.comparing(ExerciseSet::getCreated));
+        SetsByDate firstSetsByDate = new SetsByDate();
+        firstSetsByDate.setDate(SetsByDate.getDateFromSet(sets.get(0)));
+        firstSetsByDate.setSets(new ArrayList<ExerciseSet>());
+        result.add(firstSetsByDate);
+        for (ExerciseSet set : sets) {
+            Boolean found = false;
+            for(SetsByDate setsByDate : result){
+                if(setsByDate.getDate().isEqual(SetsByDate.getDateFromSet(set))){
+                    setsByDate.addSet(set);
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                SetsByDate setsByDate = new SetsByDate();
+                setsByDate.setDate(SetsByDate.getDateFromSet(set));
+                setsByDate.setSets(new ArrayList<ExerciseSet>());
+                setsByDate.addSet(set);
+                result.add(setsByDate);
+            }
+        }
+        return result;
     }
 
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)

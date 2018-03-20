@@ -12,18 +12,27 @@
 		</div>
 
 		<div class="form-group">
+			<legend class="col-form-legend">What to measure</legend>
 			<div class="checkbox" repeat.for="item of unitTypes">
 				<label><input type="checkbox" value.bind = "item.id" checked.bind = "selectedUnitTypes">${item.name} (${item.unit})</label>
 			</div>
 		</div>
 
 		<div class="form-group">
+			<legend class="col-form-legend">Muscle groups</legend>
+			<div class="checkbox" repeat.for="item of muscles" >
+				<label class="col-xs-6" style="text-transform: capitalize; margin-top: 5px;"><input type="checkbox" value.bind = "item.id" checked.bind = "selectedMuscles">${item.muscleName}</label>
+			</div>
+		</div>
+
+<!--
+		<div class="form-group">
 			<select multiple value.bind="selectedMuscles">
 				<option repeat.for="item of muscles" model.bind = "item.id">${item.muscleName}</option>
 			</select>
 		</div>
-
-			<button type = "submit" class="btn btn-success">Create exercise</button>
+-->
+		<button type = "submit" class="btn btn-success" style="margin-top: 10px">Create exercise</button>
 	</form>
 
 </template>
