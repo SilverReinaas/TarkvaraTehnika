@@ -1,20 +1,19 @@
 package ee.ttu.softtech.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import ee.ttu.softtech.model.Exercise;
 import ee.ttu.softtech.model.ExerciseSet;
 import ee.ttu.softtech.model.SetsByDate;
 import ee.ttu.softtech.service.ExerciseService;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 
@@ -76,6 +75,14 @@ public class ExerciseController {
             }
         }
         return result;
+    }
+
+    @RequestMapping(value = "getDaySetsListByPeriod", method = RequestMethod.GET)
+    public @ResponseBody
+    List<SetsByDate> getDaySetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end).plusDays(1);
+        return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)

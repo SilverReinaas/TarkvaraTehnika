@@ -16,7 +16,6 @@ export class Details{
     @bindable setsToday = null;
     @bindable setsByDay = null;
 
-
     constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
@@ -27,9 +26,16 @@ export class Details{
         this.daySetsList = [];
         this.router = router;
         this.exercise;
+        this.start = "";
+        this.end = "";
     }
     activate(params) {
-        this.getExercise(params.id);
+        $(() => {
+            this.start = moment().subtract(6, 'days').format('YYYY-MM-DD');
+            this.end = moment().format('YYYY-MM-DD');
+            this.getExercise(params.id);
+        })
+
     }
 
     fillValueInputs(exercise){
@@ -45,7 +51,7 @@ export class Details{
           .then(response => {
             this.exercise = response;
             this.getExerciseSetsToday(response);
-            this.getDaySetsList(response);
+            this.getDaySetsList();
             this.fillValueInputs(response);
             console.log(JSON.stringify(response));
           })
@@ -72,9 +78,9 @@ export class Details{
          })
     }
 
-    getExerciseSetsToday(exercise){
+    getExerciseSetsToday(){
         this.getExerciseSetsTodayEndpoint
-        .find('', {id: exercise.id})
+        .find('', {id: this.exercise.id})
         .then(response => {
             this.setsToday = response;
             console.log(response);
@@ -83,13 +89,11 @@ export class Details{
             console.log(error);
         })
     }
-    getDaySetsList(exercise){
+    getDaySetsList(){
         this.getDaySetsListEndpoint
-        .find('', {id: exercise.id})
+        .find('', {id: this.exercise.id, start: this.start, end: this.end})
         .then(response => {
-            console.log("Sets by date: ");
             this.daySetsList = response;
-            console.log(response);
         })
         .catch(error => {
             console.log(error);
@@ -97,9 +101,8 @@ export class Details{
     }
 
     attached(){
-        $(function() {
-
-            var start = moment().subtract(7, 'days');
+        $(() => {
+            var start = moment().subtract(6, 'days');
             var end = moment();
 
             function cb(start, end) {
@@ -120,10 +123,13 @@ export class Details{
                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 }
             }, cb);
-            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            $('#reportrange').on('apply.daterangepicker', (ev, picker) => {
               console.log(picker.startDate.format('YYYY-MM-DD'));
               console.log(picker.endDate.format('YYYY-MM-DD'));
-            });
+              this.start = picker.startDate.format('YYYY-MM-DD');
+              this.end = picker.endDate.format('YYYY-MM-DD');
+              this.getDaySetsList();
+            })
 
             cb(start, end);
 
