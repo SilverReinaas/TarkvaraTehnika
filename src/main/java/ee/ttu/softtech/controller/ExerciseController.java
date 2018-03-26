@@ -48,9 +48,9 @@ public class ExerciseController {
         return exerciseService.getExerciseSets(exerciseId);
     }
 
-    @RequestMapping(value = "getSetsByDateList", method = RequestMethod.GET)
+    @RequestMapping(value = "getDaySetsList", method = RequestMethod.GET)
     public @ResponseBody
-    List<SetsByDate> getSetsByDateList(@RequestParam Integer id) throws IOException, ParseException {
+    List<SetsByDate> getDaySetsList(@RequestParam Integer id) throws IOException, ParseException {
         List<SetsByDate> result = new ArrayList<>();
         List<ExerciseSet> sets =  exerciseService.getExerciseSets(id);
         Collections.sort(sets, Comparator.comparing(ExerciseSet::getCreated));

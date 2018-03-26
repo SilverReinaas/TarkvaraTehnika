@@ -5,7 +5,7 @@ import {Router} from 'aurelia-router';
 @inject(Endpoint.of('getExerciseById'),
         Endpoint.of('addMeasureLog'),
         Endpoint.of('getExerciseSetsToday'),
-        Endpoint.of('getSetsByDate'),
+        Endpoint.of('getDaySetsList'),
         Router)
 export class Details{
 
@@ -14,17 +14,17 @@ export class Details{
     unitTypeIds = [];
     unitTypes = [];
     @bindable setsToday = null;
-    @bindable setsByDate = null;
+    @bindable setsByDay = null;
 
 
-    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getSetsByDateEndpoint, router) {
+    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
         this.getExerciseSetsTodayEndpoint = getExerciseSetsTodayEndpoint;
-        this.getSetsByDateEndpoint = getSetsByDateEndpoint;
+        this.getDaySetsListEndpoint = getDaySetsListEndpoint;
         this.valueInputs = [];
         this.setsToday = [];
-        this.setsByDateList = [];
+        this.daySetsList = [];
         this.router = router;
         this.exercise;
     }
@@ -45,7 +45,7 @@ export class Details{
           .then(response => {
             this.exercise = response;
             this.getExerciseSetsToday(response);
-            this.getSetsByDate(response);
+            this.getDaySetsList(response);
             this.fillValueInputs(response);
             console.log(JSON.stringify(response));
           })
@@ -65,7 +65,7 @@ export class Details{
            console.log(response);
            this.fillValueInputs(this.exercise);
            this.getExerciseSetsToday(this.exercise);
-           this.getSetsByDate(this.exercise);
+           this.getDaySetsList(this.exercise);
          })
          .catch(error => {
            console.log(error);
@@ -83,16 +83,50 @@ export class Details{
             console.log(error);
         })
     }
-    getSetsByDate(exercise){
-        this.getSetsByDateEndpoint
+    getDaySetsList(exercise){
+        this.getDaySetsListEndpoint
         .find('', {id: exercise.id})
         .then(response => {
             console.log("Sets by date: ");
-            this.setsByDateList = response;
+            this.daySetsList = response;
             console.log(response);
         })
         .catch(error => {
             console.log(error);
         })
+    }
+
+    attached(){
+        $(function() {
+
+            var start = moment().subtract(7, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#reportrange').daterangepicker({
+                numberOfMonths : 1,
+                autoUpdateInput : true,
+                startDate: start,
+                endDate: end,
+                ranges: {
+                   'Today': [moment(), moment()],
+                   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                   'This Month': [moment().startOf('month'), moment().endOf('month')],
+                   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+              console.log(picker.startDate.format('YYYY-MM-DD'));
+              console.log(picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            cb(start, end);
+
+        });
     }
 }
