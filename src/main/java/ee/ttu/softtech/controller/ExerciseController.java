@@ -82,7 +82,12 @@ public class ExerciseController {
     List<SetsByDate> getDaySetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end).plusDays(1);
-        return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
+        try {
+            return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
+        }
+        catch (Exception ex) {
+            return  new ArrayList<>();
+        }
     }
 
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)
