@@ -56,11 +56,9 @@
     "ieee754": "npm:ieee754@^1.1.4"
   },
   "npm:base64-js@1.2.3": {},
-  "npm:ieee754@1.1.8": {},
   "github:jspm/nodelibs-buffer@0.1.1": {
     "buffer": "npm:buffer@^5.0.6"
   },
-  "npm:aurelia-pal@1.5.0": {},
   "npm:aurelia-task-queue@1.2.1": {
     "aurelia-pal": "npm:aurelia-pal@^1.0.0"
   },
@@ -205,5 +203,11 @@
     "extend": "npm:extend@^3.0.0",
     "jwt-decode": "npm:jwt-decode@^2.0.0"
   },
-  "npm:aurelia-fetch-client@1.3.1": {}
+  "npm:aurelia-fetch-client@1.3.1": {},
+  "npm:highcharts@6.0.7": {
+    "process": "github:jspm/nodelibs-process@^0.1.0",
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0"
+  },
+  "npm:ieee754@1.1.11": {},
+  "npm:aurelia-pal@1.7.0": {}
 }
