@@ -90,6 +90,57 @@ public class ExerciseController {
         }
     }
 
+    @RequestMapping(value = "getAllSetsList", method = RequestMethod.GET)
+    public @ResponseBody
+    List<SetsByDate> getAllSetsList(@RequestParam Integer id) throws IOException, ParseException {
+        List<SetsByDate> result = new ArrayList<>();
+        Iterable<Exercise> exercises = exerciseService.getUserExercises(id);
+        List<Integer> exerciseIds = new ArrayList<>();
+        for (Exercise exercise : exercises) {
+            exerciseIds.add(exercise.getId());
+        }
+        List<ExerciseSet> sets =  new ArrayList<>();
+        for (Integer exerciseId : exerciseIds) {
+            sets.addAll(exerciseService.getExerciseSets(exerciseId));
+        }
+        Collections.sort(sets, Comparator.comparing(ExerciseSet::getCreated));
+        SetsByDate firstSetsByDate = new SetsByDate();
+        firstSetsByDate.setDate(SetsByDate.getDateFromSet(sets.get(0)));
+        firstSetsByDate.setSets(new ArrayList<ExerciseSet>());
+        result.add(firstSetsByDate);
+        for (ExerciseSet set : sets) {
+            Boolean found = false;
+            for(SetsByDate setsByDate : result){
+                if(setsByDate.getDate().isEqual(SetsByDate.getDateFromSet(set))){
+                    setsByDate.addSet(set);
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                SetsByDate setsByDate = new SetsByDate();
+                setsByDate.setDate(SetsByDate.getDateFromSet(set));
+                setsByDate.setSets(new ArrayList<ExerciseSet>());
+                setsByDate.addSet(set);
+                result.add(setsByDate);
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "getAllSetsListByPeriod", method = RequestMethod.GET)
+    public @ResponseBody
+    List<SetsByDate> getAllSetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end).plusDays(1);
+        try {
+            return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
+        }
+        catch (Exception ex) {
+            return  new ArrayList<>();
+        }
+    }
+
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)
     public @ResponseBody
     List<ExerciseSet> getExerciseSetsToday(@RequestParam Integer id) throws IOException {
