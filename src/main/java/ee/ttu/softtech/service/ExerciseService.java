@@ -12,13 +12,13 @@ public interface ExerciseService {
     
     void addExercise(Exercise exercise);
 
-    Iterable<Exercise> getUserExercises(Integer userId);
+    List<Exercise> getUserExercises(Integer userId);
 
     Exercise getExerciseById(Integer id);
 
-    Iterable<UnitType> getUnitTypes();
+    List<UnitType> getUnitTypes();
 
-    Iterable<Muscle> getMuscles();
+    List<Muscle> getMuscles();
 
     List<ExerciseSet> getExerciseSets(Integer exerciseId);
 

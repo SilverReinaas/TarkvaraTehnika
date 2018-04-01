@@ -1,8 +1,6 @@
 package ee.ttu.softtech.controller;
 
-import ee.ttu.softtech.model.Exercise;
-import ee.ttu.softtech.model.ExerciseSet;
-import ee.ttu.softtech.model.SetsByDate;
+import ee.ttu.softtech.model.*;
 import ee.ttu.softtech.service.ExerciseService;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jni.Local;
@@ -32,7 +30,7 @@ public class ExerciseController {
     }
 
     @RequestMapping(value = "getUserExercises", method = RequestMethod.GET)
-    public @ResponseBody Iterable getUserExercises(@RequestParam Integer userId) throws IOException {
+    public @ResponseBody List<Exercise> getUserExercises(@RequestParam Integer userId) throws IOException {
         return exerciseService.getUserExercises(userId);
     }
 
@@ -157,11 +155,34 @@ public class ExerciseController {
     }
 
     @RequestMapping(value = "getUnitTypes", method=RequestMethod.GET)
-    public @ResponseBody Iterable getUnitTypes() throws IOException {
+    public @ResponseBody List<UnitType> getUnitTypes() throws IOException {
         return exerciseService.getUnitTypes();
     }
     @RequestMapping(value = "getMuscles", method=RequestMethod.GET)
-    public @ResponseBody Iterable getMuscles() throws IOException {
+    public @ResponseBody List<Muscle> getMuscles() throws IOException {
         return exerciseService.getMuscles();
+    }
+
+    @RequestMapping(value = "getMuscleSetsList", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MuscleSets> getMuscleSetsList(@RequestParam Integer userId) throws IOException {
+        List<MuscleSets> result = new ArrayList<>();
+        List<Muscle> muscles = getMuscles();
+        List<Exercise> exercises = getUserExercises(userId);
+        for (Muscle muscle:muscles) {
+            MuscleSets muscleSets = new MuscleSets();
+            muscleSets.setMuscle(muscle);
+            muscleSets.setExerciseSets(new ArrayList<>());
+            List<Exercise> muscleExercises = exercises.stream().filter(
+                    exercise -> exercise.getMuscles().stream().anyMatch(
+                            x -> x.getId().equals(muscle.getId()))).collect(Collectors.toList());
+            List<ExerciseSet> muscleExerciseSets = new ArrayList<>();
+            for (Exercise muscleExercise:muscleExercises) {
+                muscleExerciseSets.addAll(getExerciseSets(muscleExercise.getId()));
+            }
+            muscleSets.setExerciseSets(muscleExerciseSets);
+            result.add(muscleSets);
+        }
+        return  result;
     }
 }
