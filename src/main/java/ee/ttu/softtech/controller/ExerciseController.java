@@ -3,7 +3,6 @@ package ee.ttu.softtech.controller;
 import ee.ttu.softtech.model.*;
 import ee.ttu.softtech.service.ExerciseService;
 import org.apache.log4j.Logger;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +77,7 @@ public class ExerciseController {
     @RequestMapping(value = "getDaySetsListByPeriod", method = RequestMethod.GET)
     public @ResponseBody
     List<SetsByDate> getDaySetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
-        LocalDate startDate = LocalDate.parse(start);
+        LocalDate startDate = LocalDate.parse(start).minusDays(1);
         LocalDate endDate = LocalDate.parse(end).plusDays(1);
         try {
             return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
@@ -129,7 +128,7 @@ public class ExerciseController {
     @RequestMapping(value = "getAllSetsListByPeriod", method = RequestMethod.GET)
     public @ResponseBody
     List<SetsByDate> getAllSetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
-        LocalDate startDate = LocalDate.parse(start);
+        LocalDate startDate = LocalDate.parse(start).minusDays(1);
         LocalDate endDate = LocalDate.parse(end).plusDays(1);
         try {
             return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
@@ -165,7 +164,9 @@ public class ExerciseController {
 
     @RequestMapping(value = "getMuscleSetsList", method = RequestMethod.GET)
     public @ResponseBody
-    List<MuscleSets> getMuscleSetsList(@RequestParam Integer userId) throws IOException {
+    List<MuscleSets> getMuscleSetsList(@RequestParam Integer userId, String start, String end) throws IOException {
+        LocalDate startDate = LocalDate.parse(start).minusDays(1);
+        LocalDate endDate = LocalDate.parse(end).plusDays(1);
         List<MuscleSets> result = new ArrayList<>();
         List<Muscle> muscles = getMuscles();
         List<Exercise> exercises = getUserExercises(userId);
@@ -178,7 +179,9 @@ public class ExerciseController {
                             x -> x.getId().equals(muscle.getId()))).collect(Collectors.toList());
             List<ExerciseSet> muscleExerciseSets = new ArrayList<>();
             for (Exercise muscleExercise:muscleExercises) {
-                muscleExerciseSets.addAll(getExerciseSets(muscleExercise.getId()));
+                muscleExerciseSets.addAll(getExerciseSets(muscleExercise.getId()).stream().filter(
+                        x -> LocalDate.parse(x.getCreated().toString().substring(0, 10)).isAfter(startDate) &&
+                                LocalDate.parse(x.getCreated().toString().substring(0, 10)).isBefore(endDate)).collect(Collectors.toList()));
             }
             muscleSets.setExerciseSets(muscleExerciseSets);
             result.add(muscleSets);

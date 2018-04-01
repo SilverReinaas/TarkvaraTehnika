@@ -14,8 +14,6 @@ export class Muscles extends UserAware{
         this.start = "";
         this.end = "";
         this.muscleSetsList = [];
-        this.muscleNames = [];
-        this.muscleNumberOfSets = [];
         this.getMuscleSetsListEndpoint = getMuscleSetsListEndpoint;
         this.muscleData = [];
     }
@@ -31,19 +29,11 @@ export class Muscles extends UserAware{
 
     getMuscleSetsList(){
         this.getMuscleSetsListEndpoint
-        .find('', {userId: this.loggedInUserId})
+        .find('', {userId: this.loggedInUserId, start: this.start, end: this.end})
           .then(response => {
+            this.muscleSetsList = [];
+            this.muscleData = [];
             this.muscleSetsList = response;
-            var setsSum = 0;
-            for (let muscleSets of response) {
-               setsSum += muscleSets.exerciseSets.length;
-            }
-            for (let muscleSets of response) {
-                if(muscleSets.exerciseSets.length/setsSum > 0){
-                    this.muscleData.push({name: muscleSets.muscle.muscleName, y: ((muscleSets.exerciseSets.length/setsSum)*100).toFixed(2)});
-                }
-            }
-            console.log(this.muscleData)
             this.showMuscleData();
           })
           .catch(error => {
@@ -79,7 +69,7 @@ export class Muscles extends UserAware{
               console.log(picker.endDate.format('YYYY-MM-DD'));
               this.start = picker.startDate.format('YYYY-MM-DD');
               this.end = picker.endDate.format('YYYY-MM-DD');
-              this.getAllSetsList();
+              this.getMuscleSetsList();
             })
 
             cb(start, end);
@@ -88,9 +78,19 @@ export class Muscles extends UserAware{
         }
 
     showMuscleData(){
-        $(() => {
-        var data = [];
+    $(() => {
         var i = 0;
+        var data = [];
+        var setsSum = 0;
+        for (i = 0; i < this.muscleSetsList.length; i++) {
+           setsSum += this.muscleSetsList[i].exerciseSets.length;
+        }
+        for (i = 0; i < this.muscleSetsList.length; i++) {
+            if(this.muscleSetsList[i].exerciseSets.length/setsSum > 0){
+                this.muscleData.push({name: this.muscleSetsList[i].muscle.muscleName, y: ((this.muscleSetsList[i].exerciseSets.length/setsSum)*100).toFixed(2)});
+            }
+        }
+        console.log(this.muscleData)
         for (i = 0; i < this.muscleData.length; i++) {
             data.push(
                 {name: this.muscleData[i].name, y: parseFloat(this.muscleData[i].y)}
