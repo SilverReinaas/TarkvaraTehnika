@@ -1,5 +1,5 @@
 import Highcharts from "highcharts";
-import {inject} from "aurelia-framework";
+import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {UserAware} from 'user_aware';
 import {DOM} from "aurelia-pal";
@@ -9,6 +9,9 @@ import {DOM} from "aurelia-pal";
 export class Graphs extends UserAware{
     message = "Graphs";
 
+    @bindable daySetsDatesList = null;
+    @bindable numberOfSets = null;
+
     constructor(DOM, getAllSetsListEndpoint,) {
         super();
         this.DOM = DOM;
@@ -16,6 +19,16 @@ export class Graphs extends UserAware{
         this.daySetsList = [];
         this.daySetsDatesList = [];
         this.numberOfSets = [];
+        this.start = "";
+        this.end = "";
+    }
+
+    activate(params) {
+        $(() => {
+            this.start = moment().subtract(6, 'days').format('YYYY-MM-DD');
+            this.end = moment().format('YYYY-MM-DD');
+            this.getAllSetsList();
+        })
     }
 
     getAllSetsList(){
@@ -24,7 +37,7 @@ export class Graphs extends UserAware{
         .then(response => {
             this.daySetsList = response;
             for(let daySet of this.daySetsList){
-                this.daySetsDatesList.push(daySet.date.dayOfMonth + '.' + daySet.date.monthValue);
+                this.daySetsDatesList.push(daySet.date.dayOfMonth + '.' + daySet.date.monthValue + ' ' + daySet.date.dayOfWeek);
                 let n = 0;
                 for(let set of daySet.sets) {
                     for(let measure of set.measureLogs) {
@@ -36,6 +49,7 @@ export class Graphs extends UserAware{
             }
             console.log(this.daySetsDatesList);
             console.log(this.numberOfSets);
+            this.showSetsChart();
         })
         .catch(error => {
             console.log(error);
@@ -76,10 +90,11 @@ export class Graphs extends UserAware{
             cb(start, end);
 
         });
+    }
 
-        let element = this.DOM.getElementById('container');
-
-        var myChart = Highcharts.chart('container', {
+    showSetsChart(){
+        $(() => {
+            Highcharts.chart('container', {
               chart: {
                   type: 'line'
               },
@@ -107,6 +122,6 @@ export class Graphs extends UserAware{
                   data: this.numberOfSets
               }]
           });
+        });
     }
-
 }

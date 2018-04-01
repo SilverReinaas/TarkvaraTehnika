@@ -35,7 +35,6 @@ export class Details{
             this.end = moment().format('YYYY-MM-DD');
             this.getExercise(params.id);
         })
-
     }
 
     fillValueInputs(exercise){
