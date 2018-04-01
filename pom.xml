@@ -84,6 +84,10 @@
                 
                 <configuration>
                     <mainClass>ee.ttu.softtech.SpringApp</mainClass>
+                    <profiles>
+                        <profile>release</profile>
+                        <profile>test</profile>
+                    </profiles>
                 </configuration>
             </plugin>
         </plugins>
