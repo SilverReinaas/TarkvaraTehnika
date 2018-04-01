@@ -1,5 +1,5 @@
 import Highcharts from "highcharts";
-import {inject} from "aurelia-framework";
+import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {UserAware} from 'user_aware';
 import {DOM} from "aurelia-pal";
@@ -9,13 +9,25 @@ import {DOM} from "aurelia-pal";
 export class Analytics extends UserAware{
     message = "Analytics";
 
+    @bindable numberOfSets = null;
+    @bindable daySetsDatesList = null;
+
     constructor(DOM, getAllSetsListEndpoint,) {
         super();
         this.DOM = DOM;
         this.getAllSetsListEndpoint = getAllSetsListEndpoint;
         this.daySetsList = [];
-        this.daySetsDatesList = [];
-        this.numberOfSets = [];
+        this.daySetsDatesList = ["31.03", "01.04"];
+        this.numberOfSets = [14, 19];
+        this.start = "";
+        this.end = "";
+    }
+
+    activate(params) {
+        $(() => {
+            this.start = moment().subtract(6, 'days').format('YYYY-MM-DD');
+            this.end = moment().format('YYYY-MM-DD');
+        })
     }
 
     getAllSetsList(){
@@ -91,7 +103,7 @@ export class Analytics extends UserAware{
               },
               yAxis: {
                   title: {
-                      text: 'Temperature (°C)'
+                      text: 'Sets'
                   }
               },
               plotOptions: {
@@ -103,7 +115,7 @@ export class Analytics extends UserAware{
                   }
               },
               series: [{
-                  name: 'Sets',
+                  name: 'Date',
                   data: this.numberOfSets
               }]
           });
