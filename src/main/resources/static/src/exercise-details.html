@@ -20,6 +20,7 @@
             <p>
             <div style="width: 300px;">
                 <form role="form" submit.delegate="addMeasureLog()">
+                    <input type="date" name="logDate" value.bind="logDate" value="${logDate}"/>
                     <input type="hidden" name="exercise.id" value.bind="exercise.id" value="${exercise.id}" />
                     <div repeat.for="unitType of exercise.unitTypes" class="input-group">
                         <input type="hidden" value.bind="unitType.id" value="${unitType.id}"/>

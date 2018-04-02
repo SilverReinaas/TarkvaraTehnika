@@ -5,11 +5,17 @@ import ee.ttu.softtech.model.MeasureLog;
 import ee.ttu.softtech.model.MeasureLogData;
 import ee.ttu.softtech.service.MeasureLogService;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Controller
@@ -21,8 +27,17 @@ public class MeasureLogController {
     private MeasureLogService measureLogService;
 
     @RequestMapping(value = "addMeasureLog", method = RequestMethod.POST)
-    public @ResponseBody String addMeasureLog(@RequestBody MeasureLogData measureLogData) throws IOException {
+    public @ResponseBody String addMeasureLog(@RequestBody MeasureLogData measureLogData) throws IOException{
         ExerciseSet exerciseSet = new ExerciseSet();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date logDateTime = null;
+        try {
+            logDateTime = df.parse(measureLogData.getLogDate().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        logDateTime.setTime((new Date()).getTime());
+        exerciseSet.setCreated(logDateTime);
         exerciseSet.setExerciseId(measureLogData.getExerciseId());
         exerciseSet = measureLogService.addExerciseSet(exerciseSet);
         for (int i=0; i<measureLogData.getUnitTypes().size(); i++){

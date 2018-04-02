@@ -100,6 +100,9 @@ export class Muscles extends UserAware{
                 chart: {
                     type: 'pie'
                 },
+                title: {
+                    text: 'Sets % per muscle'
+                },
                 plotOptions: {
                     series: {
                         dataLabels: {

@@ -15,6 +15,7 @@ export class Details{
     unitTypes = [];
     @bindable setsToday = null;
     @bindable setsByDay = null;
+    @bindable logDate;
 
     constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, router) {
         this.exerciseEndpoint = exerciseEndpoint;
@@ -28,9 +29,11 @@ export class Details{
         this.exercise;
         this.start = "";
         this.end = "";
+        this.logDate;
     }
     activate(params) {
         $(() => {
+            this.logDate = moment().format('YYYY-MM-DD');
             this.start = moment().subtract(6, 'days').format('YYYY-MM-DD');
             this.end = moment().format('YYYY-MM-DD');
             this.getExercise(params.id);
@@ -59,13 +62,8 @@ export class Details{
           });
     }
     addMeasureLog() {
-//        let measurements = {};
-//        
-//        for (let i = 0; i < this.unitTypeIds.length; i++) {
-//            measurements[this.unitTypeIds] = this.unitTypes;
-//        }
         this.addMeasureLogEndpoint
-         .post('', {exerciseId: this.exercise.id, unitTypes: this.exercise.unitTypes, values: this.valueInputs})
+         .post('', {exerciseId: this.exercise.id, unitTypes: this.exercise.unitTypes, values: this.valueInputs, logDate: this.logDate})
          .then(response => {
            console.log(response);
            this.fillValueInputs(this.exercise);
