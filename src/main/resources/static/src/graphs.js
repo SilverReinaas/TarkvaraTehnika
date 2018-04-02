@@ -25,7 +25,7 @@ export class Graphs extends UserAware{
 
     activate(params) {
         $(() => {
-            this.start = moment().subtract(6, 'days').format('YYYY-MM-DD');
+            this.start = moment().subtract(29, 'days').format('YYYY-MM-DD');
             this.end = moment().format('YYYY-MM-DD');
             this.getAllSetsList();
         })
@@ -38,14 +38,7 @@ export class Graphs extends UserAware{
             this.daySetsList = response;
             for(let daySet of this.daySetsList){
                 this.daySetsDatesList.push(daySet.date.dayOfMonth + '.' + daySet.date.monthValue + ' ' + daySet.date.dayOfWeek);
-                let n = 0;
-                for(let set of daySet.sets) {
-                    for(let measure of set.measureLogs) {
-                    n+=measure.val;
-                    }
-                }
-                this.numberOfSets.push(n);
-                n=0;
+                this.numberOfSets.push(daySet.sets.length);
             }
             console.log(this.daySetsDatesList);
             console.log(this.numberOfSets);
@@ -58,7 +51,7 @@ export class Graphs extends UserAware{
 
     attached() {
     $(() => {
-            var start = moment().subtract(6, 'days');
+            var start = moment().subtract(29, 'days');
             var end = moment();
 
             function cb(start, end) {
@@ -106,7 +99,7 @@ export class Graphs extends UserAware{
               },
               yAxis: {
                   title: {
-                      text: 'Temperature (°C)'
+                      text: 'Number of sets'
                   }
               },
               plotOptions: {
