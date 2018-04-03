@@ -2304,7 +2304,7 @@
             whiteSpace: "nowrap"
           }
         },
-        credits: {
+        /*credits: {
           enabled: !0,
           href: "http://www.highcharts.com",
           position: {
@@ -2319,7 +2319,7 @@
             fontSize: "9px"
           },
           text: "Highcharts.com"
-        }
+        }*/
       };
       a.setOptions = function(B) {
         a.defaultOptions = H(!0, a.defaultOptions, B);
