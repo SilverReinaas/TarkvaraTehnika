@@ -1,9 +1,14 @@
 package ee.ttu.softtech.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
 public class ExerciseUnitType implements Serializable {
 
     @Id
@@ -22,29 +27,4 @@ public class ExerciseUnitType implements Serializable {
         this.exerciseId = exerciseId;
         this.unitTypeId = unitTypeId;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUnitTypeId() {
-        return unitTypeId;
-    }
-
-    public void setUnitTypeId(Integer unitTypeId) {
-        this.unitTypeId = unitTypeId;
-    }
-
-    public Integer getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(Integer exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-    
 }

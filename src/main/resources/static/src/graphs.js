@@ -36,12 +36,26 @@ export class Graphs extends UserAware{
         .find('', {id: this.loggedInUserId, start: this.start, end: this.end})
         .then(response => {
             this.daySetsList = response;
-            for(let daySet of this.daySetsList){
-                this.daySetsDatesList.push(daySet.date.dayOfMonth + '.' + daySet.date.monthValue + ' ' + daySet.date.dayOfWeek);
-                this.numberOfSets.push(daySet.sets.length);
+            this.daySetsDatesList = [];
+            this.numberOfSets = [];
+            var i;
+            for(i = new Date(this.start); i <= new Date(this.end); i.setDate(i.getDate()+1) ){
+                var periodMonth = Number(i.getUTCMonth())+1;
+                var periodDate = i.getUTCDate() + '.' + periodMonth + '.' + i.getUTCFullYear();
+                this.daySetsDatesList.push(periodDate);
+                var found = 0;
+                for(let daySet of this.daySetsList){
+                    var daySetDate = daySet.date.dayOfMonth + '.' + daySet.date.monthValue + '.' + daySet.date.year;
+                    if(daySetDate == periodDate){
+                        this.numberOfSets.push(daySet.sets.length);
+                        found = 1;
+                    }
+                }
+                if(found == 0){
+                    this.numberOfSets.push(0);
+                }
+                found = 0;
             }
-            console.log(this.daySetsDatesList);
-            console.log(this.numberOfSets);
             this.showSetsChart();
         })
         .catch(error => {
@@ -87,34 +101,50 @@ export class Graphs extends UserAware{
 
     showSetsChart(){
         $(() => {
+            var i = 0;
+            this.data = [];
+            for(i = 0; i < this.numberOfSets.length; i++) {
+                this.dataobject = [];
+                this.dataobject.push(this.daySetsDatesList[i]);
+                this.dataobject.push(this.numberOfSets[i]);
+                this.data.push(this.dataobject);
+                }
             Highcharts.chart('container', {
-              chart: {
-                  type: 'line'
-              },
-              title: {
-                  text: 'Sets per day'
-              },
-              xAxis: {
-                  categories: this.daySetsDatesList
-              },
-              yAxis: {
-                  title: {
-                      text: 'Number of sets'
-                  }
-              },
-              plotOptions: {
-                  line: {
-                      dataLabels: {
-                          enabled: true
-                      },
-                      enableMouseTracking: false
-                  }
-              },
-              series: [{
-                  name: 'Sets',
-                  data: this.numberOfSets
-              }]
-          });
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Sets per day'
+                },
+                subtitle: {
+                    },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '9px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Sets'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: 'Number of sets: <b>{point.y}</b>'
+                },
+                series: [{
+                    name: 'Population',
+                    data: this.data,
+                }]
+            });
         });
     }
 }

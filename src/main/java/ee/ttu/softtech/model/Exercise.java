@@ -1,11 +1,16 @@
 package ee.ttu.softtech.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Exercise {
 
     @Id
@@ -27,66 +32,4 @@ public class Exercise {
     private List<Muscle> muscles;
     @Transient
     private List<ExerciseSet> sets;
-    
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Integer> getUnitTypeIds() { return unitTypeIds; }
-
-    public void setUnitTypeIds(Set<Integer> unitTypeIds) {
-        this.unitTypeIds = unitTypeIds;
-    }
-
-    public List<UnitType> getUnitTypes() {
-        return unitTypes;
-    }
-
-    public void setUnitTypes(List<UnitType> unitTypes) {
-        this.unitTypes = unitTypes;
-    }
-
-    public List<ExerciseSet> getSets() {
-        return sets;
-    }
-
-    public void setSets(List<ExerciseSet> sets) {
-        this.sets = sets;
-    }
-
-    public List<Muscle> getMuscles() { return muscles; }
-
-    public void setMuscles(List<Muscle> muscles) { this.muscles = muscles; }
-
-    public Set<Integer> getMuscleIds() { return muscleIds; }
-
-    public void setMuscleIds(Set<Integer> muscleIds) { this.muscleIds = muscleIds; }
 }

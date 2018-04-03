@@ -1,9 +1,14 @@
 package ee.ttu.softtech.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
 public class ExerciseMuscle {
 
     @Id
@@ -21,29 +26,5 @@ public class ExerciseMuscle {
     public ExerciseMuscle(Integer exerciseId, Integer muscleId) {
         this.exerciseId = exerciseId;
         this.muscleId = muscleId;
-    }
-
-    public Integer getMuscleId() {
-        return muscleId;
-    }
-
-    public void setMuscleId(Integer muscleId) {
-        this.muscleId = muscleId;
-    }
-
-    public Integer getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(Integer exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

@@ -1,9 +1,14 @@
 package ee.ttu.softtech.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class MeasureLog {
     
     @Id
@@ -19,50 +24,4 @@ public class MeasureLog {
 
     @Transient
     private UnitType unitType;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Integer getUnitTypeId() { return unitTypeId; }
-
-    public void setUnitTypeId(Integer unitTypeId) {
-        this.unitTypeId = unitTypeId;
-    }
-
-    public Float getVal() {
-        return val;
-    }
-
-    public void setVal(Float val) {
-        this.val = val;
-    }
-
-    public Integer getExerciseSetId() {
-        return exerciseSetId;
-    }
-
-    public void setExerciseSetId(Integer exerciseSetId) {
-        this.exerciseSetId = exerciseSetId;
-    }
-
-    public UnitType getUnitType() {
-        return unitType;
-    }
-
-    public void setUnitType(UnitType unitType) {
-        this.unitType = unitType;
-    }
 }

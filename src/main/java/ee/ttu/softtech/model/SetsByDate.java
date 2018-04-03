@@ -1,5 +1,7 @@
 package ee.ttu.softtech.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.tomcat.jni.Local;
 
 import java.text.ParseException;
@@ -9,25 +11,11 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 public class SetsByDate {
     private LocalDate date;
     private List<ExerciseSet> sets;
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public List<ExerciseSet> getSets() {
-        return sets;
-    }
-
-    public void setSets(List<ExerciseSet> sets) {
-        this.sets = sets;
-    }
 
     public void addSet(ExerciseSet set) {
         sets.add(set);
