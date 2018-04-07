@@ -1,32 +1,36 @@
 import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
+import {UserAware} from 'user_aware';
 import {Router} from 'aurelia-router';
 
 @inject(Endpoint.of('getExerciseById'),
         Endpoint.of('addMeasureLog'),
         Endpoint.of('getExerciseSetsToday'),
         Endpoint.of('getDaySetsList'),
+        Endpoint.of('getExerciseStatistics'),
         Router)
-export class Details{
+export class Details extends UserAware {
 
     @bindable valueInputs = null;
     @bindable exercise = null;
+    @bindable exerciseStatistics = null;
     unitTypeIds = [];
     unitTypes = [];
     @bindable setsToday = null;
     @bindable setsByDay = null;
     @bindable logDate;
 
-    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, router) {
+    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, getExerciseStatisticsEndpoint, router) {
+        super();
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
         this.getExerciseSetsTodayEndpoint = getExerciseSetsTodayEndpoint;
         this.getDaySetsListEndpoint = getDaySetsListEndpoint;
+        this.getExerciseStatisticsEndpoint = getExerciseStatisticsEndpoint;
         this.valueInputs = [];
         this.setsToday = [];
         this.daySetsList = [];
         this.router = router;
-        this.exercise;
         this.start = "";
         this.end = "";
         this.logDate;
@@ -55,6 +59,7 @@ export class Details{
             this.getExerciseSetsToday(response);
             this.getDaySetsList();
             this.fillValueInputs(response);
+            this.getExerciseStatistics();
             console.log(JSON.stringify(response));
           })
           .catch(error => {
@@ -97,6 +102,17 @@ export class Details{
         })
     }
 
+    getExerciseStatistics() {
+        this.getExerciseStatisticsEndpoint
+        .find('', {userId: this.loggedInUserId, exerciseId: this.exercise.id})
+        .then(response => {
+            this.exerciseStatistics = response;
+            console.log(this.exerciseStatistics);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
     attached(){
         $(() => {
             var start = moment().subtract(6, 'days');
@@ -129,7 +145,6 @@ export class Details{
             })
 
             cb(start, end);
-
         });
     }
 }

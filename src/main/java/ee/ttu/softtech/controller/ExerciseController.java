@@ -2,6 +2,7 @@ package ee.ttu.softtech.controller;
 
 import ee.ttu.softtech.model.*;
 import ee.ttu.softtech.service.ExerciseService;
+import ee.ttu.softtech.service.ExerciseStatisticsService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ public class ExerciseController {
 
     @Autowired
     private ExerciseService exerciseService;
+    @Autowired
+    private ExerciseStatisticsService exerciseStatisticsService;
     
     @RequestMapping(value = "addExercise", method = RequestMethod.POST)
     public @ResponseBody String addExercise(@RequestBody Exercise exercise) throws IOException {
@@ -187,5 +190,12 @@ public class ExerciseController {
             result.add(muscleSets);
         }
         return  result;
+    }
+
+    @RequestMapping(value = "getExerciseStatistics", method=RequestMethod.GET)
+    public @ResponseBody ExerciseStatistics getExerciseStatistics(@RequestParam Integer userId, @RequestParam Integer exerciseId) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        return exerciseStatisticsService.getExerciseStatistics(userId, exerciseId, cal.getTime());
     }
 }

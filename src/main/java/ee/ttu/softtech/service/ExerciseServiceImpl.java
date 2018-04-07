@@ -86,6 +86,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         for (ExerciseSet set : result){
             List<MeasureLog> measureLogs = measureLogService.findAllByExerciseSetId(set.getId());
             set.setMeasureLogs(measureLogs);
+            set.setUnitTypes(measureLogs.stream().map(x -> x.getUnitType()).distinct().collect(Collectors.toList()));
         }
         return result;
     }
