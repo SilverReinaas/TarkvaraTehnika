@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService {
@@ -26,9 +24,25 @@ public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService 
         List<ExerciseSet> exerciseSets = es.getExerciseSets(exerciseId)
                 .stream().filter(x -> x.getCreated().after(from)).collect(Collectors.toList());
 
-        s.setTrainings(new ArrayList<Date>(
-                new TreeSet(exerciseSets.stream().map(x -> x.getCreated()).collect(Collectors.toSet()))
-        ));
+        s.setDates(new ArrayList<>());
+
+        Date start = DateUtils.truncate(from, Calendar.DATE);
+        Calendar startC = Calendar.getInstance();
+        startC.setTime(start);
+
+        Date end = new Date();
+
+        while (startC.getTime().before(end)) {
+            s.getDates().add(startC.getTime());
+            startC.add(Calendar.DATE, 1);
+        }
+
+        s.setTrainings(new ArrayList<>());
+
+        for (ExerciseSet set : exerciseSets) {
+            Date setDate = DateUtils.truncate(set.getCreated(), Calendar.DATE);
+            s.getTrainings().add(setDate);
+        }
 
         Map<String, Map<Date, Float>> measureLogs = new HashMap<>();
 

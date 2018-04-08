@@ -1,14 +1,18 @@
+import moment from '../node_modules/moment/moment';
 import {inject, bindable} from 'aurelia-framework';
 import {Endpoint} from 'aurelia-api';
 import {UserAware} from 'user_aware';
 import {Router} from 'aurelia-router';
+import {DOM} from "aurelia-pal";
+import Highcharts from "highcharts";
 
 @inject(Endpoint.of('getExerciseById'),
         Endpoint.of('addMeasureLog'),
         Endpoint.of('getExerciseSetsToday'),
         Endpoint.of('getDaySetsList'),
         Endpoint.of('getExerciseStatistics'),
-        Router)
+        Router,
+        DOM)
 export class Details extends UserAware {
 
     @bindable valueInputs = null;
@@ -20,17 +24,18 @@ export class Details extends UserAware {
     @bindable setsByDay = null;
     @bindable logDate;
 
-    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, getExerciseStatisticsEndpoint, router) {
+    constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, getExerciseStatisticsEndpoint, router, DOM) {
         super();
         this.exerciseEndpoint = exerciseEndpoint;
         this.addMeasureLogEndpoint = addMeasureLogEndpoint;
         this.getExerciseSetsTodayEndpoint = getExerciseSetsTodayEndpoint;
         this.getDaySetsListEndpoint = getDaySetsListEndpoint;
         this.getExerciseStatisticsEndpoint = getExerciseStatisticsEndpoint;
+        this.router = router;
+        this.DOM = DOM;
         this.valueInputs = [];
         this.setsToday = [];
         this.daySetsList = [];
-        this.router = router;
         this.start = "";
         this.end = "";
         this.logDate;
@@ -108,6 +113,99 @@ export class Details extends UserAware {
         .then(response => {
             this.exerciseStatistics = response;
             console.log(this.exerciseStatistics);
+
+            var es = this.exerciseStatistics;
+            var measures = Object.keys(this.exerciseStatistics.measureLogs);
+            var categories = [];
+            var series = [];
+
+            measures.forEach(function(measure) {
+                let logsOfMeasure = es.measureLogs[measure];
+                let dates = Object.keys(logsOfMeasure);
+
+                dates.forEach(function(date) {
+                    categories.push(date);
+                });
+            });
+
+            categories = Array.from(new Set(categories));
+
+            measures.forEach(function(m) {
+                let ser = {'name': m, 'data': []};
+
+                categories.forEach(function(cat) {
+                    if (cat in es.measureLogs[m]) {
+                        let v = es.measureLogs[m][cat];
+
+                        ser['data'].push(v)
+                    } else {
+                        ser['data'].push(null);
+                    }
+                });
+
+                series.push(ser);
+            });
+
+            var measuresChart = Highcharts.chart('measures', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Measures'
+                },
+                xAxis: {
+                    categories: categories
+                },
+                yAxis: {
+                    title: { text: null }
+                },
+                series: series,
+                legend: {
+                    align: 'center',
+                    enable: true
+                }
+            });
+
+            var regularityCats = [];
+            var regularityData = [];
+
+            es.dates.forEach(function(d) {
+                regularityCats.push(moment(d).format('D/M/YYYY hh:mm:ss'))
+
+                if (es.trainings.indexOf(d) != -1) {
+                    regularityData.push(1);
+                } else {
+                    regularityData.push(null);
+                }
+            });
+
+            var regularityChart = Highcharts.chart('regularity', {
+                chart: {
+                    type: 'spline',
+                    height: 80
+                },
+                title: {
+                    text: 'Regularity'
+                },
+                xAxis: {
+                    categories: regularityCats
+                },
+                yAxis: {
+                    title: { text: null },
+                    visible: false
+                },
+                series: [{
+                    data: regularityData,
+                    lineWidth: 0,
+                    marker: {
+                        enabled: true,
+                        radius: 10
+                    }
+                }],
+                legend: {
+                    enabled: false
+                }
+            });
         }).catch(error => {
             console.log(error);
         })

@@ -54,7 +54,7 @@
                     <li repeat.for="daySets of daySetsList">
                         <h3>${daySets.date.dayOfWeek} ${daySets.date.dayOfMonth}.${daySets.date.monthValue}.${daySets.date.year}</h3>
                         <span repeat.for="set of daySets.sets">
-                            <span repeat.for="measure of set.measureLogs">
+                            <span repeat.for="measure of set.measforestgreenureLogs">
                                 <span innerhtml.bind="measure.val"></span>
                                 <span innerhtml.bind="measure.unitType.unit"></span>
                             </span>
@@ -67,8 +67,14 @@
         </div>
 
         <div id="stats">
-            <h4 if.bind="exerciseStatistics.warnIncreaseDifficulty">You should increase difficulty</h4>
-            <h4 if.bind="exerciseStatistics.warnMakeMoreRegular">You should be more regular</h4>
+            <span if.bind="exerciseStatistics.warnIncreaseDifficulty">- You've been putting the same effort for a while. Try to increase difficulty.</span>
+            <span if.bind="exerciseStatistics.warnMakeMoreRegular">- You've been skipping sets lately. Try to do the same number of sets every time.</span>
+        </div>
+
+        <div id="regularity">
+        </div>
+
+        <div id="measures">
         </div>
     </div>
     </div>
