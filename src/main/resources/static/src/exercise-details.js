@@ -136,7 +136,6 @@ export class Details extends UserAware {
                 categories.forEach(function(cat) {
                     if (cat in es.measureLogs[m]) {
                         let v = es.measureLogs[m][cat];
-
                         ser['data'].push(v)
                     } else {
                         ser['data'].push(null);
@@ -170,7 +169,8 @@ export class Details extends UserAware {
             var regularityData = [];
 
             es.dates.forEach(function(d) {
-                regularityCats.push(moment(d).format('D/M/YYYY hh:mm:ss'))
+                let fmtDate = moment(d).format('D/M');
+                regularityCats.push(fmtDate);
 
                 if (es.trainings.indexOf(d) != -1) {
                     regularityData.push(1);
@@ -188,7 +188,8 @@ export class Details extends UserAware {
                     text: 'Regularity'
                 },
                 xAxis: {
-                    categories: regularityCats
+                    categories: regularityCats,
+                    labels: { rotation: 90, style: { textOverflow: 'none' } }
                 },
                 yAxis: {
                     title: { text: null },

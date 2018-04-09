@@ -8,12 +8,16 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
 public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService {
+
+    private DateFormat df = new SimpleDateFormat("dd/MM");
 
     @Autowired
     private ExerciseService es;
@@ -44,7 +48,7 @@ public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService 
             s.getTrainings().add(setDate);
         }
 
-        Map<String, Map<Date, Float>> measureLogs = new HashMap<>();
+        Map<String, Map<String, Float>> measureLogs = new HashMap<>();
 
         for (ExerciseSet set : exerciseSets) {
             if (set.getCreated().before(from)) {
@@ -59,7 +63,7 @@ public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService 
 
             for (MeasureLog ml : set.getMeasureLogs()) {
                 String name = ml.getUnitType().getName();
-                Date date = ml.getCreated();
+                String date = df.format(ml.getCreated());
                 Float value = ml.getVal();
 
                 measureLogs.get(name).put(date, value);
@@ -83,12 +87,8 @@ public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService 
         List<Integer> increaseDifficulty = new ArrayList<>();
 
         for (String measureName : measureLogs.keySet()) {
-            Map<Date, Float> measureValues = measureLogs.get(measureName);
-
-            SortedMap<Date, Float> truncatedDateMeasureValues = new TreeMap<>();
-            measureValues.entrySet().forEach(e -> truncatedDateMeasureValues.put(DateUtils.truncate(e.getKey(), Calendar.DATE), e.getValue()));
-
-            Map<Date, Double> avgPerDay = new TreeMap<>(truncatedDateMeasureValues.entrySet().stream()
+            Map<String, Float> measureValues = measureLogs.get(measureName);
+            Map<String, Double> avgPerDay = new TreeMap<>(measureValues.entrySet().stream()
                     .collect(Collectors.groupingBy(x -> x.getKey(), Collectors.averagingDouble(x -> x.getValue()))));
             List<Double> avgPerDayValues = new ArrayList<>(avgPerDay.values());
 

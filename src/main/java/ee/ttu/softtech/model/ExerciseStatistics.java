@@ -15,6 +15,6 @@ public class ExerciseStatistics {
     private boolean warnMakeMoreRegular;
     private List<Date> dates;
     private List<Date> trainings;
-    private Map<String, Map<Date, Float>> measureLogs;
+    private Map<String, Map<String, Float>> measureLogs;
 
 }
