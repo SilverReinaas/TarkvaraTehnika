@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
@@ -31,12 +32,13 @@ public class MeasureLogController {
         ExerciseSet exerciseSet = new ExerciseSet();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date logDateTime = null;
+        log.info(measureLogData.getLogDate());
         try {
             logDateTime = df.parse(measureLogData.getLogDate().toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        logDateTime.setTime((new Date()).getTime());
+
         exerciseSet.setCreated(logDateTime);
         exerciseSet.setExerciseId(measureLogData.getExerciseId());
         exerciseSet = measureLogService.addExerciseSet(exerciseSet);

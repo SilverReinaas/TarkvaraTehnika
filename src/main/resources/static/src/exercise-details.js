@@ -22,7 +22,7 @@ export class Details extends UserAware {
     unitTypes = [];
     @bindable setsToday = null;
     @bindable setsByDay = null;
-    @bindable logDate;
+    @bindable logDate = null;
 
     constructor(exerciseEndpoint, addMeasureLogEndpoint, getExerciseSetsTodayEndpoint, getDaySetsListEndpoint, getExerciseStatisticsEndpoint, router, DOM) {
         super();

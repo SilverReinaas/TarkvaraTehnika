@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class ExerciseController {
 
     private static final Logger log = Logger.getLogger(ExerciseController.class);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Autowired
     private ExerciseService exerciseService;
@@ -80,8 +82,8 @@ public class ExerciseController {
     @RequestMapping(value = "getDaySetsListByPeriod", method = RequestMethod.GET)
     public @ResponseBody
     List<SetsByDate> getDaySetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
-        LocalDate startDate = LocalDate.parse(start).minusDays(1);
-        LocalDate endDate = LocalDate.parse(end).plusDays(1);
+        LocalDate startDate = LocalDate.parse(start, formatter).minusDays(1);
+        LocalDate endDate = LocalDate.parse(end, formatter).plusDays(1);
         try {
             return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
         }
