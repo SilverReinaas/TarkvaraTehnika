@@ -12,43 +12,43 @@ import java.util.stream.Collectors;
 public class ExerciseServiceImpl implements ExerciseService {
 
     @Autowired
-    private ExerciseRepository db;
+    private ExerciseRepository exerciseRepository;
     @Autowired
-    private ExerciseSetRepository set_db;
+    private ExerciseSetRepository exerciseSetRepository;
     @Autowired
-    private UnitTypeRepository unitTypesDb;
+    private UnitTypeRepository unitTypeRepository;
     @Autowired
-    private ExerciseUnitTypeRepository exerciseUnitTypesDb;
+    private ExerciseUnitTypeRepository exerciseUnitTypeRepository;
     @Autowired
     private MeasureLogService measureLogService;
     @Autowired
-    private MuscleRepository muscleDb;
+    private MuscleRepository muscleRepository;
     @Autowired
-    private ExerciseMuscleRepository exerciseMuscleDb;
+    private ExerciseMuscleRepository exerciseMuscleRepository;
 
     @Override
     public void addExercise(Exercise exercise) {
-        exercise = db.save(exercise);
+        exercise = exerciseRepository.save(exercise);
         
         for (Integer unitTypeId : exercise.getUnitTypeIds()) {
-            exerciseUnitTypesDb.save(new ExerciseUnitType(exercise.getId(), unitTypeId));
+            exerciseUnitTypeRepository.save(new ExerciseUnitType(exercise.getId(), unitTypeId));
         }
         for (Integer muscleId : exercise.getMuscleIds()) {
-            exerciseMuscleDb.save(new ExerciseMuscle(exercise.getId(), muscleId));
+            exerciseMuscleRepository.save(new ExerciseMuscle(exercise.getId(), muscleId));
         }
     }
 
     @Override
     public List<Exercise> getUserExercises(Integer userId) {
-        List<Exercise> result = db.findByUserId(userId);
+        List<Exercise> result = exerciseRepository.findByUserId(userId);
         
         for (Exercise exercise : result) {
-            List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypesDb.findAllByExerciseId(exercise.getId());
-            List<ExerciseMuscle> exerciseMuscles = exerciseMuscleDb.findAllByExerciseId(exercise.getId());
+            List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypeRepository.findAllByExerciseId(exercise.getId());
+            List<ExerciseMuscle> exerciseMuscles = exerciseMuscleRepository.findAllByExerciseId(exercise.getId());
             List<Integer> unitTypeIds = exerciseUnitTypes.stream().mapToInt(x -> x.getUnitTypeId()).boxed().collect(Collectors.toList());
             List<Integer> muscleIds = exerciseMuscles.stream().mapToInt(x -> x.getMuscleId()).boxed().collect(Collectors.toList());
-            List<UnitType> unitTypes = unitTypesDb.findAll(unitTypeIds);
-            List<Muscle> muscles = muscleDb.findAll(muscleIds);
+            List<UnitType> unitTypes = unitTypeRepository.findAll(unitTypeIds);
+            List<Muscle> muscles = muscleRepository.findAll(muscleIds);
             exercise.setUnitTypes(unitTypes);
             exercise.setMuscles(muscles);
         }
@@ -57,13 +57,13 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public Exercise getExerciseById(Integer id) {
-        Exercise result = db.findById(id);
-        List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypesDb.findAllByExerciseId(result.getId());
-        List<ExerciseMuscle> exerciseMuscles = exerciseMuscleDb.findAllByExerciseId(result.getId());
+        Exercise result = exerciseRepository.findById(id);
+        List<ExerciseUnitType> exerciseUnitTypes = exerciseUnitTypeRepository.findAllByExerciseId(result.getId());
+        List<ExerciseMuscle> exerciseMuscles = exerciseMuscleRepository.findAllByExerciseId(result.getId());
         List<Integer> unitTypeIds = exerciseUnitTypes.stream().mapToInt(x -> x.getUnitTypeId()).boxed().collect(Collectors.toList());
         List<Integer> muscleIds = exerciseMuscles.stream().mapToInt(x -> x.getMuscleId()).boxed().collect(Collectors.toList());
-        List<UnitType> unitTypes = unitTypesDb.findAll(unitTypeIds);
-        List<Muscle> muscles = muscleDb.findAll(muscleIds);
+        List<UnitType> unitTypes = unitTypeRepository.findAll(unitTypeIds);
+        List<Muscle> muscles = muscleRepository.findAll(muscleIds);
         result.setUnitTypes(unitTypes);
         result.setMuscles((muscles));
         return result;
@@ -71,18 +71,18 @@ public class ExerciseServiceImpl implements ExerciseService {
     
     @Override
     public List<UnitType> getUnitTypes() {
-        return unitTypesDb.findAll();
+        return unitTypeRepository.findAll();
     }
 
 
     @Override
     public List<Muscle> getMuscles() {
-        return muscleDb.findAll();
+        return muscleRepository.findAll();
     }
 
     @Override
     public List<ExerciseSet> getExerciseSets(Integer exerciseId) {
-        List<ExerciseSet> result = set_db.findByExerciseId(exerciseId);
+        List<ExerciseSet> result = exerciseSetRepository.findByExerciseId(exerciseId);
         for (ExerciseSet set : result){
             List<MeasureLog> measureLogs = measureLogService.findAllByExerciseSetId(set.getId());
             set.setMeasureLogs(measureLogs);

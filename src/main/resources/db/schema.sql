@@ -34,7 +34,7 @@ CREATE SEQUENCE app_user_id_seq;
 CREATE TABLE exercise (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(100),
-    description VARCHAR(500),
+    description VARCHAR(5000),
     user_id INT NOT NULL,
     CONSTRAINT FK_UserExercise
     FOREIGN KEY (user_id) REFERENCES app_user(id)

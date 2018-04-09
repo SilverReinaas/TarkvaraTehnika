@@ -1,4 +1,3 @@
-
 INSERT INTO unit_type (id, name, unit) VALUES (1, 'Duration', 's');
 INSERT INTO unit_type (id, name, unit) VALUES (2, 'Reps', 'times');
 INSERT INTO unit_type (id, name, unit) VALUES (3, 'Weight', 'kg');
