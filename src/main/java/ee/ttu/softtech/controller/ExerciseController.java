@@ -146,13 +146,16 @@ public class ExerciseController {
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)
     public @ResponseBody
     List<ExerciseSet> getExerciseSetsToday(@RequestParam Integer id) throws IOException {
-        final Date now = new Date();
         Calendar c = Calendar.getInstance();
-        c.setTime(now);
+        c.setTime(new Date());
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         final Date morning = c.getTime();
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        final Date now = c.getTime();
         log.info(now.toString()+"-"+morning.toString());
         return exerciseService.getExerciseSets(id).stream()
                 .filter(p -> p.getCreated().after(morning) && p.getCreated().before(now)).collect(Collectors.toList());
