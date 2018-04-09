@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class ExerciseController {
 
     private static final Logger log = Logger.getLogger(ExerciseController.class);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Autowired
     private ExerciseService exerciseService;
@@ -80,8 +82,8 @@ public class ExerciseController {
     @RequestMapping(value = "getDaySetsListByPeriod", method = RequestMethod.GET)
     public @ResponseBody
     List<SetsByDate> getDaySetsListByPeriod(@RequestParam Integer id, String start, String end) throws IOException, ParseException {
-        LocalDate startDate = LocalDate.parse(start).minusDays(1);
-        LocalDate endDate = LocalDate.parse(end).plusDays(1);
+        LocalDate startDate = LocalDate.parse(start, formatter).minusDays(1);
+        LocalDate endDate = LocalDate.parse(end, formatter).plusDays(1);
         try {
             return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
         }
@@ -144,13 +146,16 @@ public class ExerciseController {
     @RequestMapping(value = "getExerciseSetsToday", method = RequestMethod.GET)
     public @ResponseBody
     List<ExerciseSet> getExerciseSetsToday(@RequestParam Integer id) throws IOException {
-        final Date now = new Date();
         Calendar c = Calendar.getInstance();
-        c.setTime(now);
+        c.setTime(new Date());
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         final Date morning = c.getTime();
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        final Date now = c.getTime();
         log.info(now.toString()+"-"+morning.toString());
         return exerciseService.getExerciseSets(id).stream()
                 .filter(p -> p.getCreated().after(morning) && p.getCreated().before(now)).collect(Collectors.toList());
