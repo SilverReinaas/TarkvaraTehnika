@@ -90,4 +90,9 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
         return result;
     }
+
+    @Override
+    public List<ExerciseSet> getExerciseSets() {
+        return exerciseSetRepository.findAll();
+    }
 }

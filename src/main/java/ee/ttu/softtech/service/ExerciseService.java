@@ -22,4 +22,6 @@ public interface ExerciseService {
 
     List<ExerciseSet> getExerciseSets(Integer exerciseId);
 
+    List<ExerciseSet> getExerciseSets();
+
 }
