@@ -20,4 +20,8 @@ public class UserServiceImpl implements UserService {
     public AppUser get(Integer userId) {
         return dao.findOne(userId);
     }
+
+    public void setDao(UserRepository dao) {
+        this.dao = dao;
+    }
 }

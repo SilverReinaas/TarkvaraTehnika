@@ -28,7 +28,7 @@ public class AuthServiceImplTest {
 
         List<Exercise> exercises = new ArrayList<>();
         Exercise ex = new Exercise();
-        ex.setUserId(1);
+        ex.setUserId(2);
         exercises.add(ex);
         db = mock(ExerciseRepository.class);
         when(db.findAll()).thenReturn(exercises);
@@ -36,6 +36,6 @@ public class AuthServiceImplTest {
 
     @Test
     public void testGetUserByUsername() {
-        Assert.assertEquals("test", db.findAll());
+        Assert.assertEquals(new Long(2), new Long(db.findAll().get(0).getUserId()));
     }
 }

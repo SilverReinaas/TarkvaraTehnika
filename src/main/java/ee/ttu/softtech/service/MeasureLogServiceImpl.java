@@ -2,11 +2,9 @@ package ee.ttu.softtech.service;
 
 import ee.ttu.softtech.dao.ExerciseSetRepository;
 import ee.ttu.softtech.dao.MeasureLogRepository;
-import ee.ttu.softtech.dao.MuscleRepository;
 import ee.ttu.softtech.dao.UnitTypeRepository;
 import ee.ttu.softtech.model.ExerciseSet;
 import ee.ttu.softtech.model.MeasureLog;
-import ee.ttu.softtech.model.Muscle;
 import ee.ttu.softtech.model.UnitType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,9 +17,9 @@ public class MeasureLogServiceImpl implements MeasureLogService {
     @Autowired
     private MeasureLogRepository db;
     @Autowired
-    private ExerciseSetRepository set_db;
+    private ExerciseSetRepository setDb;
     @Autowired
-    private UnitTypeRepository unitType_db;
+    private UnitTypeRepository unitTypeDb;
 
     @Override
     public void addMeasureLog(MeasureLog measureLog) {
@@ -30,17 +28,29 @@ public class MeasureLogServiceImpl implements MeasureLogService {
 
     @Override
     public ExerciseSet addExerciseSet(ExerciseSet exerciseSet) {
-        return set_db.save(exerciseSet);
+        return setDb.save(exerciseSet);
     }
 
     @Override
     public List<MeasureLog> findAllByExerciseSetId(Integer id) {
         List<MeasureLog> result = db.findAllByExerciseSetId(id);
         for(MeasureLog log : result){
-            UnitType unitType = unitType_db.findAllById(log.getUnitTypeId());
+            UnitType unitType = unitTypeDb.findAllById(log.getUnitTypeId());
             log.setUnitType(unitType);
         }
         return result;
+    }
+
+    void setMeasureLogRepository(MeasureLogRepository db) {
+        this.db = db;
+    }
+
+    void setExerciseSetRepository(ExerciseSetRepository setDb) {
+        this.setDb = setDb;
+    }
+
+    void setUnitTypeRepository(UnitTypeRepository unitTypeDb) {
+        this.unitTypeDb = unitTypeDb;
     }
 
 }
