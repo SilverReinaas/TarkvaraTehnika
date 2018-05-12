@@ -36,14 +36,4 @@ public class AuthController {
         return loginResponse;
     }
     
-    // This is just a test method for testing the login with http://localhost:8080/abc - remove after development
-    @RequestMapping(value = "abc", method = RequestMethod.GET)
-    public @ResponseBody LoginResponse abc() {
-        LoginData ld = new LoginData();
-        ld.setUsername("misha");
-        ld.setPassword("test");
-        boolean isLogin = authService.authenticate(ld);
-        return isLogin ? new LoginResponse(LoginResponse.Status.OK) : new LoginResponse(LoginResponse.Status.FAIL);
-    }
-    
 }

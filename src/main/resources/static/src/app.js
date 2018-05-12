@@ -16,7 +16,8 @@ export class App {
 			{ route: 'exercise-details', name: 'exercise-details', moduleId: './exercise-details', title: 'Exercise details', nav: false, auth: true },
             { route: 'description', name: 'description', moduleId: './description', title: 'Exercise description', nav: false, auth: true },
             { route: 'log-this', name: 'log-this', moduleId: './log-this', title: 'Log this Exercise', nav: false, auth: true },
-            { route: 'history', name: 'history', moduleId: './history', title: 'History', nav: false, auth: true }
+            { route: 'history', name: 'history', moduleId: './history', title: 'History', nav: false, auth: true },
+            { route: 'profile', name: 'profile', moduleId: './profile', title: 'Profile', nav: false, auth: true }
 		]);
 	}
 }

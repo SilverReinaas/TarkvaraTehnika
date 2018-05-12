@@ -18,4 +18,4 @@ insert into muscle(id, location_id, muscle_name) values (12, 12, 'hams');
 insert into muscle(id, location_id, muscle_name) values (13, 13, 'quads');
 insert into muscle(id, location_id, muscle_name) values (14, 14, 'calves');
 
-INSERT INTO app_user (id, username, password) VALUES (1, 'silver', md5('pass'));
+INSERT INTO app_user (id, username, password, email, phone, forename, surname, code) VALUES (1, 'silver', md5('pass'), 'abc@def.gh', '55551111', 'Mike', 'I.', '33344455566');

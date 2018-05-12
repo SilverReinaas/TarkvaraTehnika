@@ -19,6 +19,8 @@ export function configure(aurelia) {
         .registerEndpoint('getAllSetsList', '/getAllSetsListByPeriod')
         .registerEndpoint('getMuscleSetsList', '/getMuscleSetsList')
         .registerEndpoint('getExerciseStatistics', '/getExerciseStatistics')
+        .registerEndpoint('getProfile', '/getProfile')
+        .registerEndpoint('saveProfile', '/saveProfile')
     })
     .plugin('aurelia-authentication', baseConfig => {
         baseConfig.configure(authConfig);

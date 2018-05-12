@@ -27,7 +27,13 @@ DROP TABLE IF EXISTS exercise_log;
 CREATE TABLE app_user (
     id INT NOT NULL PRIMARY KEY,
     username VARCHAR(40) NOT NULL,
-    password VARCHAR(40) NOT NULL
+    password VARCHAR(40) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    forename VARCHAR(100) NOT NULL,
+    surname VARCHAR(100) NOT NULL,
+    code VARCHAR(11) NOT NULL
+
 );
 CREATE SEQUENCE app_user_id_seq;
 
