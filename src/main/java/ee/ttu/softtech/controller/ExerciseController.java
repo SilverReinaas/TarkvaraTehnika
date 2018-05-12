@@ -105,6 +105,7 @@ public class ExerciseController {
         for (Integer exerciseId : exerciseIds) {
             sets.addAll(exerciseService.getExerciseSets(exerciseId));
         }
+        log.info(sets);
         Collections.sort(sets, Comparator.comparing(ExerciseSet::getCreated));
         SetsByDate firstSetsByDate = new SetsByDate();
         firstSetsByDate.setDate(SetsByDate.getDateFromSet(sets.get(0)));
@@ -136,7 +137,7 @@ public class ExerciseController {
         LocalDate startDate = LocalDate.parse(start).minusDays(1);
         LocalDate endDate = LocalDate.parse(end).plusDays(1);
         try {
-            return getDaySetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
+            return getAllSetsList(id).stream().filter(x -> x.getDate().isAfter(startDate) && x.getDate().isBefore(endDate)).collect(Collectors.toList());
         }
         catch (Exception ex) {
             return  new ArrayList<>();

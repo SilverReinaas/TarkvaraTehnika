@@ -9,4 +9,6 @@ public interface ExerciseSetRepository extends JpaRepository<ExerciseSet, Intege
     ExerciseSet save(ExerciseSet exerciseSet);
 
     List<ExerciseSet> findByExerciseId(Integer exerciseId);
+
+    List<ExerciseSet> findAll();
 }
