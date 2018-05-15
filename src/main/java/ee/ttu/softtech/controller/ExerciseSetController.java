@@ -21,8 +21,8 @@ public class ExerciseSetController {
     private static final Logger log = Logger.getLogger(ExerciseController.class);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    ExerciseController exerciseController = new ExerciseController();
-
+    @Autowired
+    private ExerciseController exerciseController;
     @Autowired
     private ExerciseService exerciseService;
     @Autowired

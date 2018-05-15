@@ -79,6 +79,7 @@ export class Details extends UserAware {
            this.fillValueInputs(this.exercise);
            this.getExerciseSetsToday(this.exercise);
            this.getDaySetsList(this.exercise);
+           this.getExerciseStatistics();
          })
          .catch(error => {
            console.log(error);

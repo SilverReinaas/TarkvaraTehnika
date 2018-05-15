@@ -93,7 +93,7 @@ public class ExerciseStatisticsServiceImpl implements ExerciseStatisticsService 
             List<Double> avgPerDayValues = new ArrayList<>(avgPerDay.values());
 
             if (avgPerDayValues.size() >= 3) {
-                List<Double> lastCounts = avgPerDayValues.subList(counts.size() - 3, counts.size());
+                List<Double> lastCounts = avgPerDayValues.subList(counts.size() - 4, counts.size()-1);
 
                 if (lastCounts.stream().distinct().count() == 1) {
                     increaseDifficulty.add(1);

@@ -46,7 +46,7 @@ export class Graphs extends UserAware{
               this.exercise = this.exercises[i];
               this.getDaySetsList();
             }
-            this.showExercisesSetsChart();
+            //this.showExercisesSetsChart();
         })
     }
 
@@ -262,56 +262,4 @@ export class Graphs extends UserAware{
             });
         });
     }
-
-    showSetsChart() {
-            $(() => {
-                console.log("showSetsChart()");
-                var i = 0;
-                var xd = 0;
-                this.data = [];
-                for(i = 0; i < this.exercises.length; i++) {
-                    this.dataobject = [];
-                    this.dataobject.push(this.exercises[i].name);
-                    console.log(this.exercises[i].sets);
-                    this.dataobject.push(this.exercises[i].sets.length);
-                    this.data.push(this.dataobject);
-                    }
-                Highcharts.chart('allExercisesSets', {
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Sets per Exercise'
-                    },
-                    subtitle: {
-                        },
-                    xAxis: {
-                        type: 'category',
-                        labels: {
-                            rotation: -45,
-                            style: {
-                                fontSize: '9px',
-                                fontFamily: 'Verdana, sans-serif'
-                            }
-                        }
-                    },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: 'Sets'
-                        }
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    tooltip: {
-                        pointFormat: 'Number of sets: <b>{point.y}</b>'
-                    },
-                    series: [{
-                        name: 'Population',
-                        data: this.data,
-                    }]
-                });
-            });
-        }
 }

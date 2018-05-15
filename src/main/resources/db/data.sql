@@ -20,28 +20,28 @@ insert into muscle(id, location_id, muscle_name) values (14, 14, 'calves');
 INSERT INTO app_user (id, username, password, email, phone, forename, surname, code) VALUES (1, 'silver', md5('pass'), 'abc@def.gh', '55551111', 'Mike', 'I.', '33344455566');
 
 INSERT INTO exercise (id, name, description, user_id) VALUES (100001, 'Bench Press', 'Bench press 3 times a week', 1);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (1, 100001, 4);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (2, 100001, 5);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (3, 100001, 6);
-INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (1, 100001, 2);
-INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (2, 100001, 3);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100001, 100001, 4);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100002, 100001, 5);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100003, 100001, 6);
+INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (100001, 100001, 2);
+INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (100002, 100001, 3);
 
 INSERT INTO exercise (id, name, description, user_id) VALUES (100002, 'Push-ups', 'Push-ups every day', 1);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (4, 100002, 4);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (5, 100002, 5);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (6, 100002, 6);
-INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (3, 100002, 2);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100004, 100002, 4);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100005, 100002, 5);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100006, 100002, 6);
+INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (100003, 100002, 2);
 
 INSERT INTO exercise (id, name, description, user_id) VALUES (100003, 'Pull-ups', 'Pull-ups 3 times a week', 1);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (7, 100003, 2);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (8, 100003, 8);
-INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (4, 100003, 2);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100007, 100003, 2);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100008, 100003, 8);
+INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (100004, 100003, 2);
 
 INSERT INTO exercise (id, name, description, user_id) VALUES (100004, 'Leg curls', 'Leg curls 3 times a week', 1);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (9, 100004, 13);
-INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (10, 100004, 14);
-INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (5, 100004, 2);
-INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (6, 100004, 3);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (100009, 100004, 13);
+INSERT INTO exercise_muscle (id, exercise_id, muscle_id) VALUES (1000010, 100004, 14);
+INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (100005, 100004, 2);
+INSERT INTO exercise_unit_type (id, exercise_id, unit_type_id) VALUES (100006, 100004, 3);
 
 INSERT INTO exercise_set (id, created, exercise_id) VALUES (100001, '2018-05-02', 100001);
 INSERT INTO exercise_set (id, created, exercise_id) VALUES (100002, '2018-05-05', 100001);
